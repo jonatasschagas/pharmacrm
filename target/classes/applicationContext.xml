@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+				http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd
+				http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
+
+  <context:annotation-config/>
+  <tx:annotation-driven transaction-manager="transactionManager" />
+  
+  <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+    <property name="location" value="classpath:config.properties" />
+  </bean>
+
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+          destroy-method="close">
+        <property name="driverClass" value="${hibernate.connection.driver_class}" />
+        <property name="jdbcUrl" value="${hibernate.connection.url}" />
+        <property name="user" value="${hibernate.connection.username}" />
+        <property name="password" value="${hibernate.connection.password}" /> 
+
+        <!-- these are C3P0 properties -->
+        <property name="acquireIncrement" value="1" />
+        <property name="minPoolSize" value="20" />
+        <property name="maxPoolSize" value="20" />
+        <property name="maxIdleTime" value="1" />
+        <property name="maxStatements" value="30" />
+        <property name="autoCommitOnClose" value="true"/>
+	</bean>
+	
+  <bean id="mySessionFactory" primary="true" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean" lazy-init="true">
+    <property name="dataSource" ref="dataSource" />
+    <property name="configurationClass" value="org.hibernate.cfg.AnnotationConfiguration" />
+    <property name="configLocation" value="classpath:hibernate.cfg.xml" />
+  </bean>
+  
+  <bean id="transactionManager" name="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+    <property name="sessionFactory" ref="mySessionFactory" />
+  </bean>
+    
+  <!-- This tells Spring to activate annotation-driven transactions -->
+  <tx:annotation-driven />
+  
+  <context:component-scan base-package="com.pharmasynth.dao,com.pharmasynth.business" />
+  
+</beans>

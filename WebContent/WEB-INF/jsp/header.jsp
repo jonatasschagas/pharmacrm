@@ -4,17 +4,17 @@
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 
-
+<!DOCTYPE html> 
 <html lang="en">
 	<head>
     	<title>PharmaSynth CRM</title>
 	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     	<meta charset="utf-8">
-    	<link rel="stylesheet" href="${path}/css/bootstrap.css" media="screen">
-    	<link rel="stylesheet" href="${path}/css/bootstrap.min.css" media="screen">
-    	<link rel="stylesheet" href="${path}/css/bootstrap-responsive.css" media="screen">
-    	<link rel="stylesheet" href="${path}/css/bootstrap-responsive.min.css" media="screen">
-    	<link rel="stylesheet" href="${path}/css/bootstrap.jet.css" media="screen">
+    	<link rel="stylesheet" href="${path}/css/bootstrap.css" >
+    	<link rel="stylesheet" href="${path}/css/bootstrap.min.css">
+    	<link rel="stylesheet" href="${path}/css/bootstrap-responsive.css">
+    	<link rel="stylesheet" href="${path}/css/bootstrap-responsive.min.css" >
+    	<link rel="stylesheet" href="${path}/css/bootstrap.jet.css">
     	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
     	<script type="text/javascript" src="${path}/js/bootstrap.js"></script>
     	<script type="text/javascript" src="${path}/js/bootstrap.min.js"></script>
@@ -24,7 +24,7 @@
 		<div class="navbar navbar-inverse navbar-fixed-top">
 	    	<div class="navbar-inner">
 	        	<div class="container">
-	          		<a class="brand" href="index.html">
+	          		<a class="brand" href="${path}/index.do">
 	            		Pharmasynth CRM
 	          		</a>
 	          		<c:if test='${not empty logged_in}'>

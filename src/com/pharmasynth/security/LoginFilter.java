@@ -33,7 +33,7 @@ public class LoginFilter  implements Filter
         {
            HttpServletRequest request = (HttpServletRequest) req;
            
-           String path = "http://localhost:8080/pharmacrm";
+           String path = "http://localhost:8081/pharmacrm/";
             
             // argh... got to find a fix for this...
            request.setAttribute("path",path);

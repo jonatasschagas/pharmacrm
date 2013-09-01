@@ -9,7 +9,7 @@
 		
 		<ul class="breadcrumb">
         	<li>
-          		<a href="#">Home</a>
+          		<a href="${path}/index.do">Home</a>
           		<span class="divider">/</span>
         	</li>
         	<li class="active">
@@ -24,7 +24,7 @@
                 		<table border="0" style="width:100%;">
                   			<tr>
                     			<td align="center">
-                    				<img src="https://cdn1.iconfinder.com/data/icons/general04/png/256/clients.png" width="80">
+                    				<img src="${path}/img/clients.png" width="80">
                     			</td>
                     			<td>
                     				<h3>Clients</h3>
@@ -33,7 +33,7 @@
                 		</table>
               		</td>
               		<td style="width:80%;">
-                		<a class="btn pull-right" href="${path}/clients/new_clients.do">New client</a>
+                		<a class="btn btn-primary pull-right" href="${path}/clients/new_clients.do">New client</a>
               		</td>
             	</tr>
           	</table>
@@ -58,9 +58,7 @@
               		</div>
               		<div class="control-group">
                 		<input type="text" class="input-xxlarge">
-                		<button type="submit" class="btn">
-                  			Search
-                		</button>
+                			<a href="#" class="btn btn-info"><i class="icon-white icon-search"></i> Search</a>
               		</div>
             	</form>
         	</div>
@@ -81,12 +79,20 @@
               	<tbody>
 	                <c:forEach items="${clients}" var="c" >
 	                	<tr>
-		                  <td>${c.name}</td>
+		                  <td>
+		                  	<a href="${path}/clients/view_clients.do?id=${c.id}">
+		                  		${c.name}
+		                  	</a>
+		                  </td>
 		                  <td>${c.country}</td>
 		                  <td>${c.city}</td>
 		                  <td>${c.clientType}</td>
 		                  <td>${c.industryType}</td>
-		                  <td>Edit</td>
+		                  <td>
+		                  	<a href="${path}/clients/new_clients.do?id=${c.id}">
+		                  		<img src="${path}/img/edit-icon.png" width="20"/>
+		                  	</a>
+		                  </td>
 		                </tr>
 	                </c:forEach>
                 </tbody>

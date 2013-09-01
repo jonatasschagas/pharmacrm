@@ -9,15 +9,15 @@
 	
 		<ul class="breadcrumb">
         	<li>
-          		<a href="#">Home</a>
+          		<a href="${path}/index.do">Home</a>
           		<span class="divider">/</span>
         	</li>
         	<li>
-          		Clients
+          		<a href="${path}/clients/index.do">Clients</a>
           		<span class="divider">/</span>
         	</li>
         	<li class="active">
-          		New Clients
+          		New Client
         	</li>
       	</ul>
 		
@@ -28,29 +28,34 @@
           <div class="control-group">
             <label class="control-label">Name:</label>
             <div class="controls">
-              <input type="text" name="name" id="name" value="${client.name}">
+              <input type="text" class="input-medium" name="name" id="name" value="${client.name}">
             </div>
           </div>
-          <div class="control-group">
-            <label class="control-label">
-              Country:
-            </label>
-            <div class="controls">
-              <select name="country" id="country">
-                <c:forEach var="c" items="${countries}" varStatus="status">
-                	<option <c:if test="${client.country == c.name}">selected</c:if>value="${c.name}">${c.name}</option>
-                </c:forEach>
-              </select>
-            </div>
+          
+          <div class="row">
+          		<div class="span4">
+	          		<div class="control-group">
+	            		<label class="control-label">Country:</label>
+		            	<div class="controls">
+		              		<select name="country" id="country">
+		              			<option value=""></option>
+		                		<c:forEach var="c" items="${countries}" varStatus="status">
+		                			<option <c:if test="${client.country == c.name}">selected</c:if>value="${c.name}">${c.name}</option>
+		                		</c:forEach>
+		              		</select>
+		            	</div>
+	          		</div>
+	          	</div>
+	          	<div class="span4">
+	          		<div class="control-group">
+	            		<label class="control-label">City:</label>
+	            		<div class="controls">
+	              			<input type="text" name="city" id="city" value="${client.city}">
+	            		</div>
+	          		</div>
+	          	</div>
           </div>
-          <div class="control-group">
-            <label class="control-label">
-              City:
-            </label>
-            <div class="controls">
-              <input type="text" name="city" id="city" value="${client.city}">
-            </div>
-          </div>
+          
           <div class="control-group">
             <label class="control-label">
               Address:

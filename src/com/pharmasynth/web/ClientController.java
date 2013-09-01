@@ -39,7 +39,7 @@ public class ClientController extends MultiActionController
 	{
 		Map<String,Object> params = new HashMap<String, Object>();
 		params.put("clients",clientDAO.list());
-		return new ModelAndView("clients/index");
+		return new ModelAndView("clients/index",params);
 	}
 	
 	/**
@@ -53,8 +53,60 @@ public class ClientController extends MultiActionController
 	public ModelAndView newClients(HttpServletRequest request, HttpServletResponse response) throws Exception 
 	{
 		Map<String,Object> params = new HashMap<String, Object>();
+		
+		String id = Utils.cleanString(request.getParameter("id"));
+		
+		if(id != null)
+		{
+			try
+			{
+				Client cl = clientDAO.get(Long.parseLong(id));
+				params.put("client",cl);
+			}
+			catch (Exception ex)
+			{
+				log.error("newClients: unable to retrieve user with the id " + id,ex);
+			}
+		}
+		
 		params.put("countries",Country.listCountries());
 		return new ModelAndView("clients/new_clients",params);
+	}
+	
+	/**
+	 * Forwards to view clients view
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "clients/view_clients.do",method = RequestMethod.GET)
+	public ModelAndView viewClients(HttpServletRequest request, HttpServletResponse response) throws Exception 
+	{
+		Map<String,Object> params = new HashMap<String, Object>();
+		
+		String id = Utils.cleanString(request.getParameter("id"));
+		if(id != null)
+		{
+			try
+			{
+				Client cl = clientDAO.get(Long.parseLong(id));
+				params.put("client",cl);
+			}
+			catch (Exception ex)
+			{
+				log.error("newClients: unable to retrieve user with the id " + id,ex);
+				params.put("error","Internal Error, please try again.");
+				return new ModelAndView("clients/index",params);
+			}
+		}
+		else
+		{
+			params.put("error","Internal Error, please try again.");
+			return new ModelAndView("clients/index",params);
+		}
+		
+		return new ModelAndView("clients/view_clients",params);
 	}
 	
 	/**

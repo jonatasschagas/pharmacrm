@@ -1,0 +1,7 @@
+Manifest-Version: 1.0
+Built-By: jonataschagas
+Build-Jdk: 1.6.0_51
+Build-DateTime: 
+Build-Version: 4.2.2-SNAPSHOT
+Created-By: Maven Integration for Eclipse
+
