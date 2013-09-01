@@ -2,9 +2,10 @@
 <%@ include file="/WEB-INF/jsp/include/taglibs.jsp" %>
 <%@ taglib uri="http://displaytag.sf.net" prefix="display" %>
 
-<jsp:include page="../header.jsp" />
-	
-	<div class="container">
+<jsp:include page="../header.jsp" >
+    <jsp:param name="pageName" value="clients" />
+    <jsp:param name="sub" value="../" />
+</jsp:include>
 		
 		<ul class="breadcrumb">
         	<li>
@@ -32,7 +33,7 @@
                 		</table>
               		</td>
               		<td style="width:80%;">
-                		<a class="btn pull-right">New client</a>
+                		<a class="btn pull-right" href="${path}/clients/new_clients.do">New client</a>
               		</td>
             	</tr>
           	</table>
@@ -64,5 +65,32 @@
             	</form>
         	</div>
 		</div>	
-
+		
+		<div class="container ">
+			<table class="table table-striped ">
+            	<thead>
+                	<tr>
+                  		<th>Name</th>
+                  		<th>Country</th>
+                  		<th>City</th>
+                  		<th>Type</th>
+                  		<th>Industry</th>
+                  		<th>Edit</th>
+                	</tr>
+              	</thead>
+              	<tbody>
+	                <c:forEach items="${clients}" var="c" >
+	                	<tr>
+		                  <td>${c.name}</td>
+		                  <td>${c.country}</td>
+		                  <td>${c.city}</td>
+		                  <td>${c.clientType}</td>
+		                  <td>${c.industryType}</td>
+		                  <td>Edit</td>
+		                </tr>
+	                </c:forEach>
+                </tbody>
+    		</table>
+  		</div>
+		
 <jsp:include page="../footer.jsp" />

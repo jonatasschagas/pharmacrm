@@ -3,35 +3,29 @@
 <%@ taglib uri="http://displaytag.sf.net" prefix="display" %>
 
 <jsp:include page="header.jsp" />
-
-	    	<div class="row">
-	    		<div class="col-lg-12">
-	    			<div class="well">
-	    				<form name="login_form" id="login_form" action="${path}/login.do" method="POST" class="form-horizontal">
-	    					<fieldset>
-	    						<legend>Login</legend>
-	    						<div class="form-group">
-	    							<label for="email" class="col-lg-2 control-label">E-mail</label>
-	    							<div class="col-lg-5">
-				                    	<input type="email" class="form-control" id="email" name="email" placeholder="E-mail">
-				                    </div>
-	    						</div>
-	    						<div class="form-group">
-	    							<label for="password" class="col-lg-2 control-label">Password</label>
-	    							<div class="col-lg-5">
-				                    	<input type="password" class="form-control" id="password" name="password" placeholder="Password">
-				                    </div>
-	    						</div>
-	    						<div class="form-group">
-				                    <div class="col-lg-10 col-lg-offset-2">
-				                    	<button type="submit"  class="btn btn-primary">Login</button> 
-                    				</div>
-	  			                </div>
-	    					</fieldset>
-	    				</form>
-	    			</div>
-	    		</div>
-	    	</div>
+  		
+		<div class="hero-unit">
+			<form class="form-horizontal" action="login.do" method="POST">
+			<legend>Login</legend>
+			  <div class="control-group">
+			    <label class="control-label" for="email">E-mail</label>
+			    <div class="controls">
+			      <input type="text" id="email" name="email" placeholder="Email">
+			    </div>
+			  </div>
+			  <div class="control-group">
+			    <label class="control-label" for="inputPassword">Password</label>
+			    <div class="controls">
+			      <input type="password" id="password" name="password" placeholder="Password">
+			    </div>
+			  </div>
+			  <div class="control-group">
+			    <div class="controls">
+			      <button type="submit" class="btn">Sign in</button>
+			    </div>
+			  </div>
+			</form>
+		</div>
 
 
 <jsp:include page="footer.jsp" />

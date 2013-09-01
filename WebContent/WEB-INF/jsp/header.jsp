@@ -10,9 +10,14 @@
     	<title>PharmaSynth CRM</title>
 	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     	<meta charset="utf-8">
-    	<link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css"  rel="stylesheet">
-	    <link rel="stylesheet" href="${path}/css/bootstrap.css" media="screen">
-    	<link rel="stylesheet" href="${path}/css//font-awesome.min.css">
+    	<link rel="stylesheet" href="${path}/css/bootstrap.css" media="screen">
+    	<link rel="stylesheet" href="${path}/css/bootstrap.min.css" media="screen">
+    	<link rel="stylesheet" href="${path}/css/bootstrap-responsive.css" media="screen">
+    	<link rel="stylesheet" href="${path}/css/bootstrap-responsive.min.css" media="screen">
+    	<link rel="stylesheet" href="${path}/css/bootstrap.jet.css" media="screen">
+    	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    	<script type="text/javascript" src="${path}/js/bootstrap.js"></script>
+    	<script type="text/javascript" src="${path}/js/bootstrap.min.js"></script>
 	</head>
   	<body>
   		
@@ -22,48 +27,49 @@
 	          		<a class="brand" href="index.html">
 	            		Pharmasynth CRM
 	          		</a>
-	          		<div class="nav-collapse collapse">
-			            <ul class="nav">
-			              <li class="active">
-			                <a href="clients/index.do">
-			                  Clients
-			                </a>
-			              </li>
-			              <li>
-			                <a href="clients/index.do">
-			                  Products
-			                </a>
-			              </li>
-			              <li>
-			                <a href="clients/index.do">
-			                  Orders
-			                </a>
-			              </li>
-			              <li>
-			                <a href="clients/index.do">
-			                  Reports
-			                </a>
-			              </li>
-			              <li>
-			                <a href="clients/index.do">
-			                  Documents
-			                </a>
-			              </li>
-			              <li>
-			                <a href="clients/index.do">
-			                  Settings
-			                </a>
-			              </li>
-			            </ul>
-			          </div>
-	          		<a class="btn pull-right">Logout</a>
-	          		<!--/.nav-collapse -->
+	          		<c:if test='${not empty logged_in}'>
+		          		<div class="nav-collapse collapse">
+				            <ul class="nav">
+				              <li <c:if test="${param.pageName == 'clients'}">class="active"</c:if>>
+				                <a href="${path}/clients/index.do">
+				                  Clients
+				                </a>
+				              </li>
+				              <li>
+				                <a href="clients/index.do">
+				                  Products
+				                </a>
+				              </li>
+				              <li>
+				                <a href="clients/index.do">
+				                  Orders
+				                </a>
+				              </li>
+				              <li>
+				                <a href="clients/index.do">
+				                  Reports
+				                </a>
+				              </li>
+				              <li>
+				                <a href="clients/index.do">
+				                  Documents
+				                </a>
+				              </li>
+				              <li>
+				                <a href="clients/index.do">
+				                  Settings
+				                </a>
+				              </li>
+				            </ul>
+				          </div>
+	          				<a class="btn pull-right" href="${path}/logout.do">Logout</a>
+	          			<!--/.nav-collapse -->
+	          			</c:if>
 	        	</div>
 	      	</div>
 	    </div>
-		  		
-  		<div class="container">
-			
+		
+		<div class="container">
 		
 		<c:if test='${not empty error || not empty param.error}'>
 			<div class="row">
