@@ -1,5 +1,6 @@
 package com.pharmasynth.web;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -148,6 +149,10 @@ public class ClientController extends MultiActionController
 			if(id != null)
 			{
 				client.setId(Utils.getInteger(id).longValue());
+			}
+			else
+			{
+				client.setCreatedDate(new Date());
 			}
 			
 			client.setAcquisitionType(acquisition);

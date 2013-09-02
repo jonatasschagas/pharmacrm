@@ -1,5 +1,7 @@
 package com.pharmasynth.model;
 
+import java.util.Date;
+
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -30,6 +32,7 @@ public class Client
 	private String clientType;
 	private String industryType;
 	private String description;
+	private Date createdDate;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -137,6 +140,15 @@ public class Client
 	}
 	public void setDescription(String description) {
 		this.description = description;
+	}
+	
+	@Basic
+	@Column(nullable = false,name = "created")
+	public Date getCreatedDate() {
+		return createdDate;
+	}
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
 	}
 	
 	@Override

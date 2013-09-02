@@ -28,19 +28,19 @@
           <div class="control-group">
             <label class="control-label">Name:</label>
             <div class="controls">
-              <input type="text" class="input-medium" name="name" id="name" value="${client.name}">
+              <input type="text" class="input-xxlarge" name="name" id="name" value="${client.name}">
             </div>
           </div>
           
           <div class="row">
-          		<div class="span4">
+          		<div class="span3">
 	          		<div class="control-group">
 	            		<label class="control-label">Country:</label>
 		            	<div class="controls">
 		              		<select name="country" id="country">
 		              			<option value=""></option>
 		                		<c:forEach var="c" items="${countries}" varStatus="status">
-		                			<option <c:if test="${client.country == c.name}">selected</c:if>value="${c.name}">${c.name}</option>
+		                			<option <c:if test="${client != null && client.country.equals(c.name)}">selected</c:if> value="${c.name}">${c.name}</option>
 		                		</c:forEach>
 		              		</select>
 		            	</div>
@@ -56,87 +56,123 @@
 	          	</div>
           </div>
           
-          <div class="control-group">
-            <label class="control-label">
-              Address:
-            </label>
-            <div class="controls">
-              <input type="text" name="address" id="address" value="${client.address}">
-            </div>
+          <div class="row">
+          		<div class="span12">
+	          		<div class="control-group">
+	            		<label class="control-label">
+	              			Address:
+	            		</label>
+	            		<div class="controls">
+	              			<input type="text" name="address" class="input-xxlarge" id="address" value="${client.address}">
+	            		</div>
+	         	 	</div>
+	         	 </div>
           </div>
-          <div class="control-group">
-            <label class="control-label">
-              Billing Address:
-            </label>
-            <div class="controls">
-              <input type="text" name="billingAddress" id="billingAddress" value="${client.billingAddress}">
-            </div>
+          
+          <div class="row">
+          		<div class="span12">
+	          		<div class="control-group">
+	            		<label class="control-label">
+	              			Billing Address:
+	            		</label>
+	            		<div class="controls">
+	              			<input type="text" name="billingAddress" class="input-xxlarge" id="billingAddress" value="${client.billingAddress}">
+	            		</div>
+	         	 	</div>
+	         	 </div>
           </div>
-          <div class="control-group">
-            <label class="control-label">
-              Telephone:
-            </label>
-            <div class="controls">
-              <input type="text" name="telephone" id="telephone" value="${client.telephone}">
-            </div>
+          
+          <div class="row">
+          		<div class="span3">
+	          		<div class="control-group">
+			            <label class="control-label">
+			              Telephone:
+			            </label>
+			            <div class="controls">
+			              <input type="text" name="telephone" id="telephone" value="${client.telephone}">
+			            </div>
+			        </div>
+	          	</div>
+	          	<div class="span4">
+	          		<div class="control-group">
+			            <label class="control-label">
+			              E-mail:
+			            </label>
+			            <div class="controls">	
+			              <input type="text" name="email" id="email" value="${client.email}">
+			            </div>
+			    	</div>
+	          	</div>
           </div>
-          <div class="control-group">
-            <label class="control-label">
-              E-mail:
-            </label>
-            <div class="controls">	
-              <input type="text" name="email" id="email" value="${client.email}">
-            </div>
+          
+          <div class="row">
+          		<div class="span3">
+	          		<div class="control-group">
+			            <label class="control-label">
+			              Acquisition:
+			            </label>
+			            <div class="controls">
+			              <select name="acquisition" class="input-medium" id="acquistion">
+			                <option value=""></option>
+			                <option value="Referral" <c:if test="${client.acquisitionType == 'Referral'}">selected</c:if>>Referral</option>
+			                <option value="Direct Contact" <c:if test="${client.acquisitionType == 'Direct Contact'}">selected</c:if>>Direct Contact</option>
+			                <option value="Direct Sale" <c:if test="${client.acquisitionType == 'Direct Sale'}">selected</c:if>>Direct Sale</option>
+			              </select>
+			            </div>
+			        </div>
+	          	</div>
+	          	<div class="span3">
+	          		<div class="control-group">
+			            <label class="control-label">
+			              Type:
+			            </label>
+			            <div class="controls">	
+			              	<select id="type" class="input-medium" name="type">
+                				<option value=""></option>
+                				<option value="Distributor" <c:if test="${client.clientType == 'Distributor'}">selected</c:if>>Distributor</option>
+               	 				<option value="User" <c:if test="${client.clientType == 'User'}">selected</c:if>>User</option>
+              				</select>
+			            </div>
+			    	</div>
+	          	</div>
+	          	<div class="span3">
+	          		<div class="control-group">
+			            <label class="control-label">
+			              Industry:
+			            </label>
+			            <div class="controls">	
+			              	<select id="industry" class="input-medium" name="industry">
+                				<option value=""></option>
+                				<option value="PET Center" <c:if test="${client.industryType == 'PET Center'}">selected</c:if> >PET Center</option>
+              				</select>
+			            </div>
+			    	</div>
+	          	</div>
           </div>
-          <div class="control-group">
-            <label class="control-label">
-              Acquisition:
-            </label>
-            <div class="controls">
-              <select name="acquisition" id="acquistion">
-                <option value=""></option>
-                <option value="Referral" <c:if test="${client.acquisitionType == 'Referral'}">selected</c:if>>Referral</option>
-                <option value="Direct Contact" <c:if test="${client.acquisitionType == 'Direct Contact'}">selected</c:if>>Direct Contact</option>
-                <option value="Direct Sale" <c:if test="${client.acquisitionType == 'Direct Sale'}">selected</c:if>>Direct Sale</option>
-              </select>
-            </div>
+          
+          <div class="row">
+          		<div class="span12">
+	          		<div class="control-group">
+			            <label class="control-label">
+			              Description:
+			            </label>
+			            <div class="controls">
+			              <textarea id="description" class="input-xxlarge" name="description">${client.description}</textarea>
+			            </div>
+			        </div>
+	          	</div>
+	     </div>
+          
+          <div class="row">
+          		<div class="span4">
+	          		<div class="control-group">
+			            <div class="controls">	
+			              <button type="submit" class="btn btn-primary">Save</button>
+			            </div>
+			    	</div>
+	          	</div>
           </div>
-          <div class="control-group">
-            <label class="control-label">
-              Type:
-            </label>
-            <div class="controls">
-              <select id="type" name="type">
-                <option value=""></option>
-                <option value="Distributor" <c:if test="${client.clientType == 'Distributor'}">selected</c:if>>Distributor</option>
-                <option value="User" <c:if test="${client.clientType == 'User'}">selected</c:if>>User</option>
-              </select>
-            </div>
-          </div>
-          <div class="control-group">
-            <label class="control-label">
-              Industry:
-            </label>
-            <div class="controls">
-              <select id="industry" name="industry">
-                <option value=""></option>
-                <option value="PET Center" <c:if test="${client.industryType == 'PET Center'}">selected</c:if> >PET Center</option>
-              </select>
-            </div>
-          </div>
-          <div class="control-group">
-            <label class="control-label">
-              Description:
-            </label>
-            <div class="controls">
-              <textarea id="description" name="description">${client.description}</textarea>
-            </div>
-          </div>
-          <div class="control-group">
-            <div class="controls">
-              <button type="submit" class="btn btn-primary">Save</button>
-            </div>
-          </div>
+          
         </form>
       </div>
 
