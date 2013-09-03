@@ -25,3 +25,17 @@ CREATE TABLE `clients` (
      `last_updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON  UPDATE CURRENT_TIMESTAMP,
      PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+CREATE TABLE `contacts` (
+ 	 `id` int(11) NOT NULL AUTO_INCREMENT,
+ 	 `client_id` int(11) NOT NULL,
+ 	 `name` varchar(200) NOT NULL,
+ 	 `position` varchar(200) NULL,
+ 	 `address` varchar(550) NULL,
+ 	 `telephone` varchar(50) NULL,
+     `email` varchar(100) NULL,
+     `created` date NOT NULL,
+     `last_updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON  UPDATE CURRENT_TIMESTAMP,
+     FOREIGN KEY (client_id) REFERENCES clients(id),
+     PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;

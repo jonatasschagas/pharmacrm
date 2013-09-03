@@ -2,6 +2,7 @@ package com.pharmasynth.web;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,6 +18,7 @@ import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 
 import com.pharmasynth.dao.ClientDAO;
 import com.pharmasynth.model.Client;
+import com.pharmasynth.model.Contact;
 import com.pharmasynth.util.Country;
 import com.pharmasynth.util.Utils;
 
@@ -132,6 +134,7 @@ public class ClientController extends MultiActionController
 		String type =  Utils.cleanString(request.getParameter("type"));
 		String industry =  Utils.cleanString(request.getParameter("industry"));
 		String description =  Utils.cleanString(request.getParameter("description"));
+		String contactJson = Utils.cleanString(request.getParameter("contact_json"));
 		
 		Map<String,Object> params = new HashMap<String, Object>();
 			
@@ -144,15 +147,23 @@ public class ClientController extends MultiActionController
 		try
 		{
 			
-			Client client = new Client();
+			Client client = null;
 			
 			if(id != null)
 			{
-				client.setId(Utils.getInteger(id).longValue());
+				client = clientDAO.get(Utils.getInteger(id).longValue());
 			}
 			else
 			{
+				client = new Client();
 				client.setCreatedDate(new Date());
+			}
+			
+			List<Contact> lc = parseContacts(contactJson);
+			
+			if(lc != null)
+			{
+				client.setContacts(lc);
 			}
 			
 			client.setAcquisitionType(acquisition);
@@ -188,6 +199,11 @@ public class ClientController extends MultiActionController
 			params.put("error","Error saving the Client, please try again or contact the administrator.");
 			return new ModelAndView("clients/new_clients",params); 
 		}
+	}
+	
+	private String parseContacts(String contactsJson)
+	{
+		return null;
 	}
 	
 }

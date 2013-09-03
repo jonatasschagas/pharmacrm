@@ -1,13 +1,16 @@
 package com.pharmasynth.model;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -32,6 +35,7 @@ public class Client
 	private String clientType;
 	private String industryType;
 	private String description;
+	private List<Contact> contacts;
 	private Date createdDate;
 	
 	@Id
@@ -149,6 +153,14 @@ public class Client
 	}
 	public void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
+	}
+	
+	@OneToMany(mappedBy = "client")
+	public List<Contact> getContacts() {
+		return contacts;
+	}
+	public void setContacts(List<Contact> contacts) {
+		this.contacts = contacts;
 	}
 	
 	@Override
