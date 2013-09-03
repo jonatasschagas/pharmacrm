@@ -28,7 +28,6 @@ public class Contact {
 	private String address;
 	private String telephone;
 	private String email;
-	private Date createdDate;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,8 +38,7 @@ public class Contact {
 		this.id = id;
 	}
 	
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "client_id")
+	@ManyToOne
 	public Client getClient() {
 		return client;
 	}
@@ -93,23 +91,12 @@ public class Contact {
 		this.email = email;
 	}
 	
-	@Basic
-	@Column(nullable = false, name = "created_date")
-	public Date getCreatedDate() {
-		return createdDate;
-	}
-	public void setCreatedDate(Date createdDate) {
-		this.createdDate = createdDate;
-	}
-	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((address == null) ? 0 : address.hashCode());
 		result = prime * result + ((client == null) ? 0 : client.hashCode());
-		result = prime * result
-				+ ((createdDate == null) ? 0 : createdDate.hashCode());
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
@@ -137,11 +124,6 @@ public class Contact {
 			if (other.client != null)
 				return false;
 		} else if (!client.equals(other.client))
-			return false;
-		if (createdDate == null) {
-			if (other.createdDate != null)
-				return false;
-		} else if (!createdDate.equals(other.createdDate))
 			return false;
 		if (email == null) {
 			if (other.email != null)
@@ -175,7 +157,7 @@ public class Contact {
 		return "Contact [id=" + id + ", client=" + client + ", name=" + name
 				+ ", position=" + position + ", address=" + address
 				+ ", telephone=" + telephone + ", email=" + email
-				+ ", createdDate=" + createdDate + "]";
+				+ "]";
 	}
 	
 	

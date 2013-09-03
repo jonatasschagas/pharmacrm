@@ -1,5 +1,6 @@
 package com.pharmasynth.web;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -9,6 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +21,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 
 import com.pharmasynth.dao.ClientDAO;
+import com.pharmasynth.dao.ContactDAO;
 import com.pharmasynth.model.Client;
 import com.pharmasynth.model.Contact;
 import com.pharmasynth.util.Country;
@@ -29,6 +34,10 @@ public class ClientController extends MultiActionController
 	
 	@Autowired
 	private ClientDAO clientDAO;
+	
+	@Autowired
+	private ContactDAO contactDAO;
+	
 	
 	/**
 	 * Forwards to index view
@@ -110,6 +119,36 @@ public class ClientController extends MultiActionController
 		}
 		
 		return new ModelAndView("clients/view_clients",params);
+	}
+	
+	/**
+	 * Deletes a contact from the client
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "clients/delete_contact.do",method = RequestMethod.GET)
+	public Object deleteContact(HttpServletRequest request, HttpServletResponse response) throws Exception 
+	{
+		String id = Utils.cleanString(request.getParameter("id"));
+		String clientId = Utils.cleanString(request.getParameter("client_id"));
+		
+		if(id != null && clientId != null)
+		{
+			Contact c = contactDAO.get(Utils.getInteger(id).longValue());
+			if(c != null)
+			{
+				contactDAO.delete(c);
+				Client cl = clientDAO.get(Utils.getInteger(clientId).longValue());
+				if(cl != null && cl.getContacts() != null)
+				{
+					return formatContacts(cl.getContacts()).toJSONString();
+				}
+			}
+		}
+		
+		return "[]";
 	}
 	
 	/**
@@ -201,8 +240,81 @@ public class ClientController extends MultiActionController
 		}
 	}
 	
-	private String parseContacts(String contactsJson)
+	private List<Contact> parseContacts(String contactsJson)
 	{
+		try
+		{
+			JSONArray jsonArrContacts = (JSONArray) JSONValue.parse(contactsJson);
+			
+			List<Contact> lc = null;
+			
+			if(jsonArrContacts != null && jsonArrContacts.size() > 0)
+			{
+				for(int i = 0; i < jsonArrContacts.size(); i ++)
+				{
+					JSONObject jsonContact = (JSONObject)jsonArrContacts.get(i);
+					
+					Contact c = new Contact();
+					c.setAddress((String)jsonContact.get("address"));
+					c.setPosition((String)jsonContact.get("position"));
+					c.setTelephone((String)jsonContact.get("telephone"));
+					c.setEmail((String)jsonContact.get("email"));
+					c.setName((String)jsonContact.get("name"));
+					try
+					{
+						c.setId((Long)jsonContact.get("id"));
+					}
+					catch (Exception ex)
+					{
+						log.error("error parsing the contact id.",ex);
+					}
+					
+					if(lc == null)
+					{
+						lc = new ArrayList<Contact>();
+					}
+					
+					lc.add(c);
+				}
+			}
+			
+			return lc;
+			
+		}
+		catch (Exception ex)
+		{
+			log.error("unable to parse contacts.",ex);
+		}
+		
+		return null;
+	}
+	
+	private JSONArray formatContacts(List<Contact> lc)
+	{
+		try
+		{
+			JSONArray ja = new JSONArray();
+			
+			for(Contact c : lc)
+			{
+				JSONObject jc = new JSONObject();
+				jc.put("id",c.getId());
+				jc.put("name", c.getName());
+				jc.put("address", c.getAddress());
+				jc.put("telephone", c.getTelephone());
+				jc.put("email", c.getEmail());
+				jc.put("position", c.getPosition());
+				
+				ja.add(jc);
+			}
+			
+			return ja;
+		}
+		catch (Exception ex)
+		{
+			log.error("unable to format contacts.",ex);
+		}
+		
 		return null;
 	}
 	

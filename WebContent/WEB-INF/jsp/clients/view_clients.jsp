@@ -111,6 +111,36 @@
 		              ${client.description}
 		            </div>
 		          </div>
+		          
+		          <legend>Contacts</legend>
+		          
+		          <div class="control-group">
+          		<table class="table table-striped ">
+			             <thead>
+			               <tr>
+			                 <th>Name</th>
+			                 <th>Address</th>
+			                 <th>Telephone</th>
+			                 <th>E-mail</th>
+			                 <th>Position</th>
+			               </tr>
+			             </thead>
+			               <tbody id="contact_table">
+			               
+			               <c:forEach items="${client.contacts}" var="c">
+			               		<tr>
+			               			<td>${c.name}</td>
+			               			<td>${c.address}</td>
+			               			<td>${c.telephone}</td>
+			               			<td>${c.email}</td>
+			               			<td>${c.position}</td>
+			               		</tr>
+			               </c:forEach>
+			             </tbody>
+			   </table>
+          	</div>
+          </div>
+		          
 		          <div class="control-group">
 		            <div class="controls">
 		              <a href="javascript:window.print();" class="btn btn-info"><i class="icon-white icon-print"></i> Print</a>

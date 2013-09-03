@@ -181,6 +181,17 @@
 	          </div>
 	         </div>
 	  	</div>
+	  	
+	  	<div class="row">
+         		<div class="span12">
+              <div class="control-group">
+	            <label class="control-label">Address:</label>
+	            <div class="controls">
+	              <input type="text" class="input-xxlarge" name="contact_address" id="contact_address"/>
+	            </div>
+	          </div>
+	         </div>
+	  	</div>
             
           <div class="row">
           		<div class="span3">
@@ -223,6 +234,7 @@
 			             <thead>
 			               <tr>
 			                 <th>Name</th>
+			                 <th>Address</th>
 			                 <th>Telephone</th>
 			                 <th>E-mail</th>
 			                 <th>Position</th>
@@ -235,6 +247,7 @@
 			               <c:forEach items="${client.contacts}" var="c">
 			               		<tr>
 			               			<td>${c.name}</td>
+			               			<td>${c.address}</td>
 			               			<td>${c.telephone}</td>
 			               			<td>${c.email}</td>
 			               			<td>${c.position}</td>
@@ -267,6 +280,7 @@
          			var contactPosition = $("#contact_position").val();
          			var contactEmail = $("#contact_email").val();
          			var contactTelephone = $("#contact_telephone").val();
+         			var contactAddress = $("#contact_address").val();
          			var contactId = $("#contact_selected_id").val();
          			var contactJsonString = $("#contact_json").val();
          			
@@ -293,6 +307,7 @@
          						currentContact.name = contactName;
          						currentContact.position = contactPosition;
          						currentContact.email = contactEmail;
+         						currentContact.address = contactAddress;
          						currentContact.telephone = contactTelephone;
          					}
          					
@@ -301,12 +316,12 @@
          			}
          			else if(contactJson != null)// new contact to add to existing contacts
          			{
-         				contact = {id : "", name : contactName, position : contactPosition, email : contactEmail, telephone : contactTelephone };
+         				contact = {id : "", name : contactName, position : contactPosition, email : contactEmail, telephone : contactTelephone, address : contactAddress };
          				contactJson.push(contact);
          			}
          			else // first contact
        				{
-         				contactJson = [{id : "" ,name : contactName, position : contactPosition, email : contactEmail, telephone : contactTelephone }];
+         				contactJson = [{id : "" ,name : contactName, position : contactPosition, email : contactEmail, telephone : contactTelephone, address : contactAddress}];
        				}
          			
          			$("#contact_json").val(JSON.stringify(contactJson));
@@ -315,6 +330,7 @@
          			$("#contact_position").val("");
          			$("#contact_email").val("");
          			$("#contact_telephone").val("");
+         			$("#contact_address").val("");
          			$("#contact_selected_id").val("");
          		
          			
@@ -347,6 +363,7 @@
      					
      					var html = "<tr>";
      					html += "<td>"+currentContact.name+"</td>";
+     					html += "<td>"+currentContact.address+"</td>";
      					html += "<td>"+currentContact.telephone+"</td>";
      					html += "<td>"+currentContact.email+"</td>";
      					html += "<td>"+currentContact.position+"</td>";
@@ -383,6 +400,7 @@
  							|| name != null && name != "" && currentContact.name == name)
  					{
  						$("#contact_name").val(currentContact.name);
+     					$("#contact_address").val(currentAddress.name);
      					$("#contact_telephone").val(currentContact.telephone);
      					$("#contact_email").val(currentContact.email);
      					$("#contact_position").val(currentContact.position);	
@@ -394,12 +412,13 @@
          	{	
          		var name = $("#" + item).attr("name");
      			var id = $("#" + item).attr("n_id");
+     			var clientId = $("#id").val();
      			var contactJson = JSON.parse($("#contact_json").val());
 				
      			if(id != null && id != "")
      			{
      				// deletes from the database first
-     				$.get('${path}/clients/delete_contact.do?id=' + id, function(data) {
+     				$.get('${path}/clients/delete_contact.do?id=' + id + "&client_id=" + clientId , function(data) {
           				// reloads the contacts
      					$('#contact_json').html(data);
           			});
@@ -415,7 +434,7 @@
      					var currentContact = contactJson[i];
      					if(currentContact.name != name)
      					{
-     						newJson.push({id : currentContact.id, name : currentContact.name, email : currentContact.email, telephone: currentContact.telephone, position : currentContact.position});
+     						newJson.push({id : currentContact.id, name : currentContact.name, email : currentContact.email, telephone: currentContact.telephone, position : currentContact.position, address : currentContact.address});
      					}
      				}
      				
