@@ -11,7 +11,6 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -42,6 +41,7 @@ public class Client
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id", unique = true, nullable = false)
 	public Long getId() {
 		return id;
 	}
@@ -157,9 +157,8 @@ public class Client
 		this.createdDate = createdDate;
 	}
 	
-	@OneToMany(cascade=CascadeType.ALL,fetch=FetchType.EAGER,targetEntity=Contact.class)
-    @JoinColumn(name="client_id")
-	public List<Contact> getContacts() {
+	@OneToMany(fetch=FetchType.EAGER, cascade = CascadeType.ALL, mappedBy="client")
+    public List<Contact> getContacts() {
 		return contacts;
 	}
 	public void setContacts(List<Contact> contacts) {

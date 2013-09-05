@@ -1,8 +1,7 @@
 package com.pharmasynth.model;
 
-import java.util.Date;
-
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -18,7 +17,7 @@ import javax.persistence.Table;
  *
  */
 @Entity
-@Table(name = TableConstants.TABLE_CLIENT)
+@Table(name = TableConstants.TABLE_CONTACTS)
 public class Contact {
 	
 	private Long id;
@@ -38,7 +37,8 @@ public class Contact {
 		this.id = id;
 	}
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "client_id")
 	public Client getClient() {
 		return client;
 	}

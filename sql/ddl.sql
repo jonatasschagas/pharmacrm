@@ -26,7 +26,7 @@ CREATE TABLE `clients` (
      PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
-CREATE TABLE `contact` (
+CREATE TABLE `contacts` (
  	 `id` int(11) NOT NULL AUTO_INCREMENT,
  	 `client_id` int(11) NOT NULL,
  	 `name` varchar(200) NOT NULL,
@@ -35,6 +35,6 @@ CREATE TABLE `contact` (
  	 `telephone` varchar(50) NULL,
      `email` varchar(100) NULL,
      `last_updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON  UPDATE CURRENT_TIMESTAMP,
-     FOREIGN KEY (client_id) REFERENCES clients(id),
+     CONSTRAINT `fk_contact_client` FOREIGN KEY (`client_id`) REFERENCES `clients` (`id`),
      PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
