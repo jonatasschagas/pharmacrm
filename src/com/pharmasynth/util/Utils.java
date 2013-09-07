@@ -235,7 +235,7 @@ public class Utils {
 	
 	public static Integer getNumberOfPages(List list)
 	{
-		return list.size() / PAGE_SIZE;
+		return list != null ? list.size() / PAGE_SIZE : 0;
 	}
 	
 }

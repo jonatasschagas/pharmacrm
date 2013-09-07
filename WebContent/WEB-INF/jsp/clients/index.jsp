@@ -109,7 +109,7 @@
     			</c:if>
 	    		
 			</c:if>
-			<c:if test="${clients.size() == 0}">
+			<c:if test="${(clients == null || clients.size() == 0) && typeSearch != null && searchQuery != null}">
 	            No records could be found by your search.   	
 	        </c:if>
         

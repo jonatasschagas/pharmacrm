@@ -1,9 +1,12 @@
 package com.pharmasynth.web;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -59,6 +62,26 @@ public class ClientController extends MultiActionController
 			} 
 			else if(typeSearch.equalsIgnoreCase("contactPerson"))
 			{
+				Set<Client> setClients = new HashSet<Client>();
+				List<Contact> lContacts = contactDAO.findByName(searchQuery);
+				
+				if(lContacts != null && lContacts.size() > 0)
+				{
+					for(Contact c : lContacts)
+					{
+						setClients.add(c.getClient());
+					}
+				}
+				
+				if(setClients.size() > 0)
+				{
+					list = new ArrayList<Client>();
+					
+					for(Client cl : setClients)
+					{
+						list.add(cl);
+					}
+				}
 				
 			}
 			else if(typeSearch.equalsIgnoreCase("all"))
