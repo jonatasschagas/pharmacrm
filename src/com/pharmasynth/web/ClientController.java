@@ -1,6 +1,5 @@
 package com.pharmasynth.web;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -10,14 +9,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.JSONValue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 
@@ -51,7 +46,39 @@ public class ClientController extends MultiActionController
 	public ModelAndView index(HttpServletRequest request, HttpServletResponse response) throws Exception 
 	{
 		Map<String,Object> params = new HashMap<String, Object>();
-		params.put("clients",clientDAO.list());
+		
+		String typeSearch = Utils.cleanString(request.getParameter("typeSearch"));
+		String searchQuery = Utils.cleanString(request.getParameter("searchQuery"));
+		
+		List<Client> list = null;
+		if(typeSearch != null && searchQuery != null)
+		{
+			if(typeSearch.equalsIgnoreCase("name"))
+			{
+				list = clientDAO.findByName(searchQuery);
+			} 
+			else if(typeSearch.equalsIgnoreCase("contactPerson"))
+			{
+				
+			}
+			else if(typeSearch.equalsIgnoreCase("all"))
+			{
+				list = clientDAO.findByAll(searchQuery);
+			}
+			
+			params.put("typeSearch",typeSearch);
+			params.put("searchQuery",searchQuery);
+			
+		}
+		else
+		{
+			list = clientDAO.list();
+		}
+		
+		params.put("clients",Utils.paginate(request, list));
+		params.put("numberOfPages",Utils.getNumberOfPages(list));
+		params.put("currentPage",Utils.getCurrentPage(request));
+		
 		return new ModelAndView("clients/index",params);
 	}
 	
@@ -151,7 +178,7 @@ public class ClientController extends MultiActionController
 			}
 		}
 		
-		return new ModelAndView("clients/index",params);
+		return new ModelAndView("clients/contacts",params);
 	}
 	
 	@RequestMapping(value = "clients/delete_client.do",method = RequestMethod.GET)

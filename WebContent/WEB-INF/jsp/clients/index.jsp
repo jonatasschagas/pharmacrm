@@ -40,63 +40,79 @@
       	</div>
 		
 		<div class="row-fluid" style="margin-top:30px;">
-         	<div class="span7" style="margin:0 auto;float:none;">
-            	<form class="form-horizontal">
+         	<div class="span8" style="margin:0 auto;float:none;">
+            	<form class="form-horizontal" name="searchForm" method="GET" action="${path}/clients/index.do">
               		<div class="control-group">
                 		<label class="radio inline">
-                  			<input type="radio" id="inlineCheckbox1" value="option1">
+                  			<input type="radio" name="typeSearch" id="name" value="name" <c:if test="${typeSearch == 'name'}">checked</c:if>>
                   			Name
                 		</label>
                 		<label class="radio inline">
-                  			<input type="radio" id="inlineCheckbox2" value="option2">
+                  			<input type="radio" name="typeSearch" id="contactPerson" value="contactPerson" <c:if test="${typeSearch == 'contactPerson'}">checked</c:if>>
                   			Contact person
                 		</label>
                 		<label class="radio inline">
-                  			<input type="radio" id="inlineCheckbox3" value="option3">
+                  			<input type="radio" name="typeSearch" id="all" value="all" <c:if test="${typeSearch == 'all'}">checked</c:if>>
                   			All
                 		</label>
               		</div>
               		<div class="control-group">
-                		<input type="text" class="input-xxlarge">
-                			<a href="#" class="btn btn-info"><i class="icon-white icon-search"></i> Search</a>
+                		<input type="text" name="searchQuery" class="input-xxlarge" value="${searchQuery}">
+                		<a href="#" onclick="document.forms['searchForm'].submit(); return false;"  class="btn btn-info"><i class="icon-white icon-search"></i> Search</a>
+              			<a href="${path}/clients/index.do" class="btn btn-primary"> Show All</a>
               		</div>
             	</form>
         	</div>
 		</div>	
 		
 		<div class="container ">
-			<table class="table table-striped ">
-            	<thead>
-                	<tr>
-                  		<th>Name</th>
-                  		<th>Country</th>
-                  		<th>City</th>
-                  		<th>Type</th>
-                  		<th>Industry</th>
-                  		<th>Edit</th>
-                	</tr>
-              	</thead>
-              	<tbody>
-	                <c:forEach items="${clients}" var="c" >
+			
+			<c:if test="${clients.size() > 0}">
+				<table class="table table-striped ">
+	            	<thead>
 	                	<tr>
-		                  <td>
-		                  	<a href="${path}/clients/view_clients.do?id=${c.id}">
-		                  		${c.name}
-		                  	</a>
-		                  </td>
-		                  <td>${c.country}</td>
-		                  <td>${c.city}</td>
-		                  <td>${c.clientType}</td>
-		                  <td>${c.industryType}</td>
-		                  <td>
-		                  	<a href="${path}/clients/new_clients.do?id=${c.id}">
-		                  		<img src="${path}/img/edit-icon.png" width="20"/>
-		                  	</a>
-		                  </td>
-		                </tr>
-	                </c:forEach>
-                </tbody>
-    		</table>
+	                  		<th>Name</th>
+	                  		<th>Country</th>
+	                  		<th>City</th>
+	                  		<th>Type</th>
+	                  		<th>Industry</th>
+	                  		<th>Edit</th>
+	                	</tr>
+	              	</thead>
+	              	<tbody>
+	                   	  <c:forEach items="${clients}" var="c">
+		                  		<tr>
+				                	<td>
+				                  		<a href="${path}/clients/view_clients.do?id=${c.id}">
+				                  			${c.name}
+				                  		</a>
+				                  	</td>
+				                  	<td>${c.country}</td>
+				                  	<td>${c.city}</td>
+				                  	<td>${c.clientType}</td>
+				                  	<td>${c.industryType}</td>
+				                  	<td>
+				                  		<a href="${path}/clients/new_clients.do?id=${c.id}">
+				                  			<img src="${path}/img/edit-icon.png" width="20"/>
+				                  		</a>
+				                  	</td>
+			                	</tr>
+		                  </c:forEach>  
+	    		    </tbody>
+	    		</table>
+	    		
+	    		<c:if test="${numberOfPages > 0}">
+	    			<jsp:include page="../pagination.jsp">
+    					<jsp:param name="link" value="${path}/clients/index.do" />
+    					<jsp:param name="parameters" value="typeSearch=${typeSearch}&searchQuery=${searchQuery}" />
+    				</jsp:include>
+    			</c:if>
+	    		
+			</c:if>
+			<c:if test="${clients.size() == 0}">
+	            No records could be found by your search.   	
+	        </c:if>
+        
   		</div>
 		
 <jsp:include page="../footer.jsp" />

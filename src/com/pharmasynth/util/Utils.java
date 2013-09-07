@@ -15,6 +15,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Properties;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.log4j.Logger;
 
 public class Utils {
@@ -22,6 +24,8 @@ public class Utils {
 	private static Logger logger = Logger.getLogger(Utils.class);
 	private static SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
 	private static SimpleDateFormat timestampFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+	
+	public static final int PAGE_SIZE = 8;
 	
 	private static String environment = null;
 	
@@ -177,6 +181,61 @@ public class Utils {
 	    (T[])new Comparable[collection.size()]);
 	  Arrays.sort(array);
 	  return Arrays.asList(array);
+	}
+	
+	public static List paginate(HttpServletRequest request, List list)
+	{
+		try
+		{
+			String selectedPage = cleanString(request.getParameter("page"));
+			Integer selectedPageNumber = 0;
+			
+			if(selectedPage == null)
+			{
+				return list.subList(0,PAGE_SIZE);
+			}
+			else
+			{
+				selectedPageNumber = Integer.parseInt(selectedPage);
+				
+				Integer start = selectedPageNumber * PAGE_SIZE;
+				Integer end = selectedPageNumber * PAGE_SIZE + PAGE_SIZE;
+				
+				if(end > list.size())
+				{
+					end = list.size();
+				}
+				
+				return list.subList(start,end);
+			}
+		}
+		catch (Exception ex) {}
+		return list;
+	}
+	
+	public static Integer getCurrentPage(HttpServletRequest request)
+	{
+		try
+		{
+			String selectedPage = cleanString(request.getParameter("page"));
+			Integer selectedPageNumber = 0;
+			
+			if(selectedPage == null)
+			{
+				return 0;
+			}
+			else
+			{
+				return Integer.parseInt(selectedPage);
+			}
+		}
+		catch (Exception ex) {}
+		return 0;
+	}
+	
+	public static Integer getNumberOfPages(List list)
+	{
+		return list.size() / PAGE_SIZE;
 	}
 	
 }

@@ -38,18 +38,7 @@
 	         </div>
 	  	</div>
 	  	
-	  	<div class="row">
-         		<div class="span12">
-              <div class="control-group">
-	            <label class="control-label">Address:</label>
-	            <div class="controls">
-	              <input type="text" class="input-xxlarge" name="contact_address" id="contact_address" value="${contact.address}"/>
-	            </div>
-	          </div>
-	         </div>
-	  	</div>
-            
-          <div class="row">
+	  	 <div class="row">
           		<div class="span3">
 	          		<div class="control-group">
 	            		<label class="control-label">Position:</label>
@@ -67,6 +56,18 @@
 	          		</div>
 	          	</div>
           </div>
+         
+	  	
+	  	<div class="row">
+         		<div class="span12">
+              <div class="control-group">
+	            <label class="control-label">Address:</label>
+	            <div class="controls">
+	              <input type="text" class="input-xxlarge" name="contact_address" id="contact_address" value="${contact.address}"/>
+	            </div>
+	          </div>
+	         </div>
+	  	</div>
           
           <div class="row">
           		<div class="span6">

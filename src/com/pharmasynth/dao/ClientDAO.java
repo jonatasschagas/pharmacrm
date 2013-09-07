@@ -31,4 +31,22 @@ public class ClientDAO extends BaseDAO<Client> {
 		return l;
 	}
 	
+	/**
+	 * Retrieves the Clients by all the parameters
+	 * @param name
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	public List<Client> findByAll(String search)
+	{
+		Object[] params = new Object[]{"%"+search+"%","%"+search+"%","%"+search+"%","%"+search+"%","%"+search+"%"
+				,"%"+search+"%","%"+search+"%","%"+search+"%","%"+search+"%","%"+search+"%","%"+search+"%"};
+		
+		List<Client> l = getHibernateTemplate().find("from Client where name like ? or country like ?"
+				+ " or city like ? or address like ? or billingAddress like ? or telephone like ? or email like ? or "
+				+ " acquisitionType like ? or clientType like ? or industryType like ? or description like ?",params);
+		
+		return l;
+	}
+	
 }
