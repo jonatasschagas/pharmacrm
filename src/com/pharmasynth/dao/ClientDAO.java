@@ -15,18 +15,32 @@ public class ClientDAO extends BaseDAO<Client> {
 	public ClientDAO(SessionFactory sessionFactory) {
 		super(sessionFactory);
 	}
-
+	
+	/**
+	 * Retrieves the Clients ordering by parameter
+	 * @param name
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	public List<Client> list(String orderBy)
+	{
+		List<Client> l = getHibernateTemplate().find("from Client order by "+orderBy+" ");
+		
+		return l;
+	}
+	
+	
 	/**
 	 * Retrieves the Clients by name
 	 * @param name
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	public List<Client> findByName(String name)
+	public List<Client> findByName(String name, String orderBy)
 	{
 		Object[] params = new Object[]{"%"+name+"%"};
 		
-		List<Client> l = getHibernateTemplate().find("from Client where name like ? ",params);
+		List<Client> l = getHibernateTemplate().find("from Client where name like ? order by "+orderBy+" ",params);
 		
 		return l;
 	}
@@ -37,14 +51,14 @@ public class ClientDAO extends BaseDAO<Client> {
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	public List<Client> findByAll(String search)
+	public List<Client> findByAll(String search, String orderBy)
 	{
 		Object[] params = new Object[]{"%"+search+"%","%"+search+"%","%"+search+"%","%"+search+"%","%"+search+"%"
 				,"%"+search+"%","%"+search+"%","%"+search+"%","%"+search+"%","%"+search+"%","%"+search+"%"};
 		
 		List<Client> l = getHibernateTemplate().find("from Client where name like ? or country like ?"
 				+ " or city like ? or address like ? or billingAddress like ? or telephone like ? or email like ? or "
-				+ " acquisitionType like ? or clientType like ? or industryType like ? or description like ?",params);
+				+ " acquisitionType like ? or clientType like ? or industryType like ? or description like ? order by "+orderBy+"",params);
 		
 		return l;
 	}

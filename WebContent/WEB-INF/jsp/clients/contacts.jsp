@@ -127,8 +127,6 @@
          
          	$(document).ready(function(){
          		
-         		//loadContactTable();
-         		
          		$("#contact_add_btn").click(function(){
          			
          			var contactName = $("#contact_name").val();
@@ -173,6 +171,13 @@
          	
          	function deleteContact(contactId)
          	{	
+         		$("#contactSelected").val(contactId);
+         		$("#deleteContactModal").modal('show');
+         	}
+         	
+         	function confirmDeleteContact()
+         	{
+         		var contactId = $("#contactSelected").val();
 				var clientId = $("#client_id").val();
          		
          		$.get("${path}/clients/delete_contact.do",{
@@ -180,12 +185,35 @@
      				client_id : clientId
      			}, function(data) {
       				// reloads the contacts
+      				$("#deleteContactModal").modal('hide');
  					$('#contact_area').html(data);
-      			});	
+      			});
+         	}
+         	
+         	function cleanDeleteContact()
+         	{
+         		$("#contactSelected").val("");
+         		$("#deleteContactModal").modal('hide');
          	}
          	
          </script>
      
      </div>
+		<input type="hidden" name="contactSelected" id="contactSelected" />
+		
+		<!-- Modal -->
+		<div id="deleteContactModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		  <div class="modal-header">
+		    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+		    <h3 id="myModalLabel">Are you sure?</h3>
+		  </div>
+		  <div class="modal-body">
+		    <p>Are you sure you want to delete this contact?</p>
+		  </div>
+		  <div class="modal-footer">
+		    <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+		    <a class="btn btn-danger" href="javascript:confirmDeleteContact();" >Delete</a>
+		  </div>
+		</div>
 
 <jsp:include page="../footer.jsp" />

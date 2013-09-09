@@ -9,10 +9,10 @@
 	</c:if>
 	<c:forEach begin="0" end="${numberOfPages}" var="i">
 		<c:if test="${i == currentPage}">
-			<li class="active"><a href="${param.link}?page=${i}&${param.parameters}">${i}</a></li>
+			<li class="active"><a href="${param.link}?page=${i}&${param.parameters}">${i + 1}</a></li>
 		</c:if>
 		<c:if test="${i != currentPage}">
-			<li><a href="${param.link}?page=${i}&${param.parameters}">${i}</a></li>
+			<li><a href="${param.link}?page=${i}&${param.parameters}">${i + 1}</a></li>
 		</c:if>
 	</c:forEach>
 	<c:if test="${currentPage < numberOfPages}">

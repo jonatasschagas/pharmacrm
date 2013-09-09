@@ -71,11 +71,11 @@
 				<table class="table table-striped ">
 	            	<thead>
 	                	<tr>
-	                  		<th>Name</th>
-	                  		<th>Country</th>
-	                  		<th>City</th>
-	                  		<th>Type</th>
-	                  		<th>Industry</th>
+	                  		<th><a href="${path}/clients/index.do?orderBy=name&typeSearch=${typeSearch}&searchQuery=${searchQuery}">Name</a></th>
+	                  		<th><a href="${path}/clients/index.do?orderBy=country&typeSearch=${typeSearch}&searchQuery=${searchQuery}">Country</a></th>
+	                  		<th><a href="${path}/clients/index.do?orderBy=city&typeSearch=${typeSearch}&searchQuery=${searchQuery}">City</a></th>
+	                  		<th><a href="${path}/clients/index.do?orderBy=clientType&typeSearch=${typeSearch}&searchQuery=${searchQuery}">Type</a></th>
+	                  		<th><a href="${path}/clients/index.do?orderBy=industryType&typeSearch=${typeSearch}&searchQuery=${searchQuery}">Industry</a></th>
 	                  		<th>Edit</th>
 	                	</tr>
 	              	</thead>
@@ -84,7 +84,7 @@
 		                  		<tr>
 				                	<td>
 				                  		<a href="${path}/clients/view_clients.do?id=${c.id}">
-				                  			${c.name}
+				                  			> ${c.name}
 				                  		</a>
 				                  	</td>
 				                  	<td>${c.country}</td>
@@ -104,7 +104,7 @@
 	    		<c:if test="${numberOfPages > 0}">
 	    			<jsp:include page="../pagination.jsp">
     					<jsp:param name="link" value="${path}/clients/index.do" />
-    					<jsp:param name="parameters" value="typeSearch=${typeSearch}&searchQuery=${searchQuery}" />
+    					<jsp:param name="parameters" value="typeSearch=${typeSearch}&searchQuery=${searchQuery}&orderBy=${orderBy}" />
     				</jsp:include>
     			</c:if>
 	    		

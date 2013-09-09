@@ -34,6 +34,7 @@ public class LoginFilter  implements Filter
            HttpServletRequest request = (HttpServletRequest) req;
            
            String path = "http://localhost:8081/pharmacrm/";
+           //String path = "http://crm.pharmasynth.ee/pharmacrm/";
             
             // argh... got to find a fix for this...
            request.setAttribute("path",path);
@@ -56,9 +57,8 @@ public class LoginFilter  implements Filter
             }
             else
             {
-                if(!url.contains("login"))
+                if(!url.contains("pharmacrm/login"))
                 {
-                	req.setAttribute("url",getFullURL(request));
                 	request.getRequestDispatcher("/login.do").forward(req,res);
                 }
                 else
@@ -71,17 +71,6 @@ public class LoginFilter  implements Filter
         catch(Exception ex)
         {
             log.error("error in login filter",ex);
-        }
-    }
-    
-    private String getFullURL(HttpServletRequest request) {
-        StringBuffer requestURL = request.getRequestURL();
-        String queryString = request.getQueryString();
-
-        if (queryString == null) {
-            return requestURL.toString();
-        } else {
-            return requestURL.append('?').append(queryString).toString();
         }
     }
     

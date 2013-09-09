@@ -48,8 +48,7 @@ public class LoginController extends MultiActionController
 		     {
 	            String email = Utils.cleanString(request.getParameter("email"));
 	            String password = Utils.cleanString(request.getParameter("password"));
-	            String url = Utils.cleanString(request.getParameter("url"));
-	
+	       
 	            if(email != null && password != null)
 	            {
 		
@@ -61,14 +60,7 @@ public class LoginController extends MultiActionController
 	            		request.getSession().setAttribute("user",user);
 	            		
 	            		model.put("success","Welcome " + user.getName() + "!");
-	            		if(url != null)
-	            		{
-	            			return new ModelAndView("redirect:" + url,model);
-	            		}
-	            		else
-	            		{
-	            			return new ModelAndView("index",model);
-	            		}
+	            		return new ModelAndView("index",model);
 	            	}
 	            }
 		     }

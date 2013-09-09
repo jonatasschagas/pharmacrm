@@ -144,6 +144,7 @@
 		          <div class="control-group">
 		            <div class="controls">
 		              <a href="javascript:window.print();" class="btn btn-info"><i class="icon-white icon-print"></i> Print</a>
+		              <a href="${path}/clients/new_clients.do?id=${client.id}" class="btn btn-primary"><i class="icon-white icon-pencil"></i> Edit</a>
 		              <button  onClick="$('#deleteClientModal').modal()" role="button" data-toggle="modal" class="btn btn-danger"><i class="icon-white icon-remove-sign"></i> Delete</button>
 		            </div>
 		          </div>
@@ -161,7 +162,7 @@
 		    <p>Are you sure you want to delete this client?</p>
 		  </div>
 		  <div class="modal-footer">
-		    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+		    <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
 		    <a class="btn btn-danger" href="delete_client.do?id=${client.id}" >Delete</a>
 		  </div>
 		</div>

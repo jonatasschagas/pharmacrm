@@ -146,7 +146,13 @@
 			            <div class="controls">	
 			              	<select id="industry" class="input-medium" name="industry">
                 				<option value=""></option>
-                				<option value="PET Center" <c:if test="${client.industryType == 'PET Center'}">selected</c:if> >PET Center</option>
+                				<option value="University Hospital" <c:if test="${client.industryType == 'University Hospital'}">selected</c:if> >University Hospital</option>
+                				<option value="Hospital" <c:if test="${client.industryType == 'Hospital'}">selected</c:if> >Hospital</option>
+                				<option value="Research Center" <c:if test="${client.industryType == 'Research Center'}">selected</c:if> >Research Center</option>
+              					<option value="University" <c:if test="${client.industryType == 'University'}">selected</c:if> >University</option>
+              					<option value="Pharma" <c:if test="${client.industryType == 'Pharma'}">selected</c:if> >Pharma</option>
+              					<option value="Trading" <c:if test="${client.industryType == 'Trading'}">selected</c:if> >Trading</option>
+              					<option value="Others" <c:if test="${client.industryType == 'Others'}">selected</c:if> >Others</option>
               				</select>
 			            </div>
 			    	</div>

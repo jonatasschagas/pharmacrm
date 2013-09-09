@@ -52,13 +52,19 @@ public class ClientController extends MultiActionController
 		
 		String typeSearch = Utils.cleanString(request.getParameter("typeSearch"));
 		String searchQuery = Utils.cleanString(request.getParameter("searchQuery"));
+		String orderBy = Utils.cleanString(request.getParameter("orderBy"));
+		
+		if(orderBy == null)
+		{
+			orderBy = "id";
+		}
 		
 		List<Client> list = null;
 		if(typeSearch != null && searchQuery != null)
 		{
 			if(typeSearch.equalsIgnoreCase("name"))
 			{
-				list = clientDAO.findByName(searchQuery);
+				list = clientDAO.findByName(searchQuery,orderBy);
 			} 
 			else if(typeSearch.equalsIgnoreCase("contactPerson"))
 			{
@@ -86,7 +92,7 @@ public class ClientController extends MultiActionController
 			}
 			else if(typeSearch.equalsIgnoreCase("all"))
 			{
-				list = clientDAO.findByAll(searchQuery);
+				list = clientDAO.findByAll(searchQuery,orderBy);
 			}
 			
 			params.put("typeSearch",typeSearch);
@@ -95,9 +101,10 @@ public class ClientController extends MultiActionController
 		}
 		else
 		{
-			list = clientDAO.list();
+			list = clientDAO.list(orderBy);
 		}
 		
+		params.put("orderBy",orderBy);
 		params.put("clients",Utils.paginate(request, list));
 		params.put("numberOfPages",Utils.getNumberOfPages(list));
 		params.put("currentPage",Utils.getCurrentPage(request));
@@ -288,8 +295,7 @@ public class ClientController extends MultiActionController
 			if(client != null && client.getId() != null)
 			{
 				params.put("success","Client " + client.getName() + " registered successfully in the database.");
-				params.put("clients",clientDAO.list());
-				return new ModelAndView("clients/index",params);
+				return index(request, response);
 			}
 			else
 			{
@@ -362,7 +368,7 @@ public class ClientController extends MultiActionController
 			
 			if(cl == null)
 			{
-				params.put("error","Error saving the Client, please try again or contact the administrator.");
+				params.put("error","Error saving the Contact, please try again or contact the administrator.");
 				return new ModelAndView("clients/contacts",params);
 			}
 			
