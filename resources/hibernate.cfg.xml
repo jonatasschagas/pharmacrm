@@ -8,5 +8,8 @@
       <mapping class="com.pharmasynth.model.User"/>
       <mapping class="com.pharmasynth.model.Client"/>
       <mapping class="com.pharmasynth.model.Contact"/>
+      <mapping class="com.pharmasynth.model.Product"/>
+      <mapping class="com.pharmasynth.model.CaseStudy"/>
+      <mapping class="com.pharmasynth.model.Application"/>
    </session-factory>
 </hibernate-configuration>

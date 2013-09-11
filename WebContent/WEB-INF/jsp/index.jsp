@@ -20,10 +20,10 @@
               </a>
             </td>
             <td>
-              <img src="${path}/img/products.png" alt="Products " width="80px ">
-              <div class="icon_text ">
-                Products
-              </div>
+              <a href="${path}/products/index.do">
+              	<img src="${path}/img/products.png" width="80px">
+	            <div class="icon_text">Products</div>
+              </a>
             </td>
             <td>
               <img src="${path}/img/orders.png" alt="Orders" width="80px ">

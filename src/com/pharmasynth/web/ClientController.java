@@ -165,7 +165,7 @@ public class ClientController extends MultiActionController
 			}
 			catch (Exception ex)
 			{
-				log.error("newClients: unable to retrieve user with the id " + id,ex);
+				log.error("viewClients: unable to retrieve user with the id " + id,ex);
 				params.put("error","Internal Error, please try again.");
 				return new ModelAndView("clients/index",params);
 			}
@@ -226,7 +226,6 @@ public class ClientController extends MultiActionController
 		}
 		
 		params.put("success","Client " + name  + " deleted sucessfully.");
-		params.put("clients",clientDAO.list());
 		
 		return new ModelAndView("clients/index",params);
 	}

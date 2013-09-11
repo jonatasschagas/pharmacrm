@@ -37,8 +37,8 @@
 				                  Clients
 				                </a>
 				              </li>
-				              <li>
-				                <a href="clients/index.do">
+				               <li <c:if test="${param.pageName == 'products'}">class="active"</c:if>>
+				                <a href="${path}/products/index.do">
 				                  Products
 				                </a>
 				              </li>
