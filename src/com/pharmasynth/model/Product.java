@@ -1,6 +1,5 @@
 package com.pharmasynth.model;
 
-import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Basic;
@@ -34,7 +33,7 @@ public class Product
 	private String cas;
 	private String description;
 	private String structurePath;
-	private List<CaseStudy> caseStudies;
+	private Set<CaseStudy> caseStudies;
 	private Set<Application> applications;
 	
 	@Id
@@ -119,10 +118,10 @@ public class Product
 	}
 	
 	@OneToMany(fetch=FetchType.EAGER, cascade = CascadeType.ALL, mappedBy="product")
-	public List<CaseStudy> getCaseStudies() {
+	public Set<CaseStudy> getCaseStudies() {
 		return caseStudies;
 	}
-	public void setCaseStudies(List<CaseStudy> caseStudies) {
+	public void setCaseStudies(Set<CaseStudy> caseStudies) {
 		this.caseStudies = caseStudies;
 	}
 	@OneToMany(fetch=FetchType.EAGER, cascade = CascadeType.ALL, mappedBy="product")

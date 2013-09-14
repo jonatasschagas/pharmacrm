@@ -84,7 +84,7 @@
 		                  		<tr>
 				                	<td>
 				                  		<a href="${path}/clients/view_clients.do?id=${c.id}">
-				                  			> ${c.name}
+				                  			${c.name}
 				                  		</a>
 				                  	</td>
 				                  	<td>${c.country}</td>

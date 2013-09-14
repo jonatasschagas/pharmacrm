@@ -87,7 +87,7 @@
 		                  		<tr>
 				                	<td>
 				                  		<a href="${path}/products/view_product.do?id=${p.id}">
-				                  			> ${p.name}
+				                  			${p.name}
 				                  		</a>
 				                  	</td>
 				                  	<td>${p.productType}</td>

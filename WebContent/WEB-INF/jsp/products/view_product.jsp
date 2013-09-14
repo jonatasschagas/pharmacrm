@@ -105,7 +105,7 @@
 			            </label>
 			            <div class="controls">	
 			              	 <c:if test="${product != null && product.structurePath != null}">
-			            	 	<img src="${product.structurePath}" width="150" />
+			            	 	<img src="${path}/products/files.do?file=${product.structurePath}&folder=products" width="150" />
 			            	 </c:if>
 			            </div>
 			    	</div>
@@ -141,11 +141,11 @@
 			               			<td>${c.name}</td>
 			               			<td>
 			               				<c:if test="${c.link != null}">
-			               					<a href="${c.link}">${c.link}</a>
+			               					<a href="${c.link}">${c.name}</a>
 			               				</c:if>
 			               				
 			               				<c:if test="${c.filePath != null}">
-			               					<a href="${c.filePath}">${c.filePath}</a>
+			               					<a href="${path}/products/files.do?file=${c.filePath}&folder=case_studies">${c.name}</a>
 			               				</c:if>
 			               				
 			               			</td>
@@ -188,7 +188,7 @@
 		</div>
 
 		<!-- Modal -->
-		<div id="deleteClientModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div id="deleteProductModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 		  <div class="modal-header">
 		    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 		    <h3 id="myModalLabel">Are you sure?</h3>
@@ -198,7 +198,7 @@
 		  </div>
 		  <div class="modal-footer">
 		    <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
-		    <a class="btn btn-danger" href="delete_product.do?id=${product.id}" >Delete</a>
+		    <a class="btn btn-danger" href="${path}/products/delete_product.do?id=${product.id}" >Delete</a>
 		  </div>
 		</div>
 

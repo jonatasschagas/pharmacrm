@@ -2,6 +2,7 @@
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -18,12 +19,16 @@ import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 
+import com.google.common.io.Files;
 import com.pharmasynth.dao.ApplicationDAO;
 import com.pharmasynth.dao.CaseStudyDAO;
 import com.pharmasynth.dao.ProductDAO;
@@ -101,6 +106,10 @@ public class ProductController extends MultiActionController
 					}
 				}
 				
+			}
+			else if(typeSearch.equalsIgnoreCase("cas"))
+			{
+				list = productDAO.findByCAS(searchQuery,orderBy);
 			}
 			else if(typeSearch.equalsIgnoreCase("all"))
 			{
@@ -244,7 +253,7 @@ public class ProductController extends MultiActionController
 			{
 				applicationDAO.delete(a);
 				Product p = productDAO.get(Utils.getInteger(productId).longValue());
-				if(p != null && p.getCaseStudies() != null)
+				if(p != null)
 				{
 					params.put("product", p);
 				}
@@ -273,7 +282,32 @@ public class ProductController extends MultiActionController
 		return index(request, response);
 	}
 	
-	
+	 @RequestMapping(value = "products/files.do", produces = "text/plain",method = RequestMethod.GET)
+	 @ResponseBody
+	 public HttpEntity<byte[]> getFile(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		 String fileName = Utils.cleanString(request.getParameter("file"));
+		 String folder = Utils.cleanString(request.getParameter("folder"));
+		 
+		 String folderPath = null;
+		 if(folder.equalsIgnoreCase("products"))
+		 {
+			 folderPath = FOLDER_PRODUCTS;
+		 }
+		 else if(folder.equalsIgnoreCase("case_studies"))
+		 {
+			 folderPath = FOLDER_CASE_STUDIES;
+		 }
+		 
+		 byte[] documentBody = Files.toByteArray(new File(folderPath + fileName));
+		 
+		 HttpHeaders header = new HttpHeaders();
+		 header.set("Content-Disposition",
+		                   "attachment; filename=" + fileName.replace(" ", "_"));
+		 header.setContentLength(documentBody.length);
+		 
+		 return new HttpEntity<byte[]>(documentBody, header);
+	 }
+	 
 	/**
 	 * Saves the product
 	 * @param request
@@ -282,7 +316,7 @@ public class ProductController extends MultiActionController
 	 * @throws Exception
 	 */
 	@RequestMapping(value = "products/save_product.do",method = RequestMethod.POST)
-	public ModelAndView saveClient(HttpServletRequest request, HttpServletResponse response) throws Exception 
+	public ModelAndView saveProduct(HttpServletRequest request, HttpServletResponse response) throws Exception 
 	{
 		Map<String,Object> params = new HashMap<String, Object>();
 		Map<String,String> parameters = new HashMap<String,String>();
@@ -290,7 +324,8 @@ public class ProductController extends MultiActionController
 		FileItemFactory factory = new DiskFileItemFactory();
         ServletFileUpload upload = new ServletFileUpload(factory);
         byte[] fileByteData = null; 
-        
+        String fileName = null;
+		
         try {
             
             List<FileItem> fields = upload.parseRequest(request);
@@ -306,6 +341,7 @@ public class ProductController extends MultiActionController
                 else
                 {
                 	fileByteData = fi.get();
+                	fileName = Utils.cleanString(fi.getName());
                 }
             }
             
@@ -318,11 +354,10 @@ public class ProductController extends MultiActionController
     		String productionYear = Utils.cleanString(parameters.get("productionYear"));
     		String cas = Utils.cleanString(parameters.get("cas"));
     		String description = Utils.cleanString(parameters.get("description"));
-    		String structurePath = null;
     		
-    		if(fileByteData != null)
+    		if(fileByteData != null && fileName != null)
             {
-    			File file = new File(FOLDER_PRODUCTS + name);
+    			File file = new File(FOLDER_PRODUCTS + fileName);
         		
     			if(file.exists())
                 {
@@ -333,8 +368,6 @@ public class ProductController extends MultiActionController
                 FileOutputStream fos = new FileOutputStream(file);
                 fos.write(fileByteData);
                 fos.close();
-                
-                structurePath = file.getPath();
             }
             
     	    Product p = null;
@@ -357,9 +390,9 @@ public class ProductController extends MultiActionController
 			p.setProductionYear(productionYear);
 			p.setProductType(type);
 			
-			if(structurePath != null)
+			if(fileName != null)
 			{
-				p.setStructurePath(structurePath);
+				p.setStructurePath(fileName);
 			}
 			
 			p = productDAO.save(p);
@@ -466,7 +499,8 @@ public class ProductController extends MultiActionController
 		
 		FileItemFactory factory = new DiskFileItemFactory();
         ServletFileUpload upload = new ServletFileUpload(factory);
-        byte[] fileByteData = null; 
+        byte[] fileByteData = null;
+        String fileName = null;
         
         try {
             
@@ -483,18 +517,18 @@ public class ProductController extends MultiActionController
                 else
                 {
                 	fileByteData = fi.get();
+                	fileName = Utils.cleanString(fi.getName());
                 }
             }
             
             String id = Utils.cleanString(parameters.get("caseStudyId"));
-            String productId = Utils.cleanString(parameters.get("productId"));
+            String productId = Utils.cleanString(parameters.get("product_id"));
             String name = Utils.cleanString(parameters.get("caseStudy_name"));
     		String link = Utils.cleanString(parameters.get("caseStudy_link"));
-    		String filePath = null;
     		
-    		if(fileByteData != null)
+    		if(fileByteData != null && fileName != null)
             {
-    			File file = new File(FOLDER_CASE_STUDIES + name);
+    			File file = new File(FOLDER_CASE_STUDIES + fileName);
         		
     			if(file.exists())
                 {
@@ -505,8 +539,6 @@ public class ProductController extends MultiActionController
                 FileOutputStream fos = new FileOutputStream(file);
                 fos.write(fileByteData);
                 fos.close();
-                
-                filePath = file.getPath();
             }
             
     	    CaseStudy c = null;
@@ -525,22 +557,26 @@ public class ProductController extends MultiActionController
 			c.setName(name);
 			c.setProduct(p);
 			
-			if(filePath != null)
+			if(fileName != null)
 			{
-				c.setFilePath(filePath);
+				c.setFilePath(fileName);
 			}
 			
 			c = caseStudyDAO.save(c);
 			
+			p = productDAO.get(Long.parseLong(productId));
+			
+			params.put("product", p);
+			
 			if(c != null && c.getId() != null)
 			{
 				params.put("success","Case Study " + p.getName() + " registered successfully in the database.");
-				return index(request, response);
+				return new ModelAndView("products/case_studies",params);
 			}
 			else
 			{
 				params.put("error","Error saving the case study, please try again or contact the administrator.");
-				return new ModelAndView("products/new_product",params);
+				return new ModelAndView("products/case_studies",params);
 			}
     	    
         }
@@ -548,7 +584,7 @@ public class ProductController extends MultiActionController
         {
         	log.error("saveCaseStudy: error saving the case study",ex);
         	params.put("error","Unable to save the case study. Please, try again.");
-			return new ModelAndView("products/new_product",params);
+			return new ModelAndView("products/case_studies",params);
         }
 	}
 	

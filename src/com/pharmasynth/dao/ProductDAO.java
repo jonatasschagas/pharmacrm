@@ -71,7 +71,7 @@ public class ProductDAO extends BaseDAO<Product> {
 		Object[] params = new Object[]{"%"+search+"%","%"+search+"%","%"+search+"%","%"+search+"%","%"+search+"%"
 				,"%"+search+"%","%"+search+"%"};
 		
-		List<Product> l = getHibernateTemplate().find("from Product where name like ? or product_id like ?"
+		List<Product> l = getHibernateTemplate().find("from Product where name like ? or product_idph like ?"
 				+ " or product_type like ? or in_stock like ? or price like ? or production_year like ? or cas like ? order by "+orderBy+"",params);
 		
 		return l;

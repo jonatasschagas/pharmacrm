@@ -238,4 +238,20 @@ public class Utils {
 		return list != null ? list.size() / PAGE_SIZE : 0;
 	}
 	
+	public static File getFile(String path) throws Exception
+	{
+		return new File(path);
+	}
+	
+	public static String pathToURL(String path)
+	{
+		try
+		{
+			File f = new File(path);
+			return f.toURI().toString();
+		}
+		catch (Exception ex){}
+		return null;
+	}
+	
 }
