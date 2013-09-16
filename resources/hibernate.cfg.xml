@@ -11,5 +11,7 @@
       <mapping class="com.pharmasynth.model.Product"/>
       <mapping class="com.pharmasynth.model.CaseStudy"/>
       <mapping class="com.pharmasynth.model.Application"/>
+      <mapping class="com.pharmasynth.model.Order"/>
+      <mapping class="com.pharmasynth.model.OrderProduct"/>
    </session-factory>
 </hibernate-configuration>

@@ -8,5 +8,7 @@ public interface TableConstants {
 	public static final String TABLE_PRODUCTS = "products";
 	public static final String TABLE_APPLICATIONS = "applications";
 	public static final String TABLE_CASE_STUDIES = "case_studies";
+	public static final String TABLE_ORDERS = "orders";
+	public static final String TABLE_ORDERS_PRODUCTS = "orders_products";
 	
 }

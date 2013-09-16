@@ -42,11 +42,10 @@ public class ProductController extends MultiActionController
 {
 	private static Logger log = Logger.getLogger(ProductController.class);
 	
-	//public static final String FOLDER_PRODUCTS = "/products/";
-	public static final String FOLDER_PRODUCTS = "C:/products/";
-	//public static final String FOLDER_PRODUCTS = "/case_studies/";
-	public static final String FOLDER_CASE_STUDIES = "C:/case_studies/";
-	
+	public static final String FOLDER_PRODUCTS = "/products/";
+	//public static final String FOLDER_PRODUCTS = "C:/products/";
+	public static final String FOLDER_CASE_STUDIES = "/case_studies/";
+	//public static final String FOLDER_CASE_STUDIES = "C:/case_studies/";
 	
 	@Autowired
 	private ProductDAO productDAO;

@@ -22,107 +22,54 @@
       	</ul>
 		
 		<div class="well">
+       	 	
        	 	<div class="row">
-          		<div class="span12">
-	              <div class="control-group">
-		            <label class="control-label">Name:</label>
-		            <div class="controls">
-		              ${product.name}
-		            </div>
-		          </div>
-		         </div>
-		  	</div>
-          <div class="row">
-          		<div class="span3">
-	          		<div class="control-group">
-	            		<label class="control-label">Type:</label>
-		            	<div class="controls">
-		              		${product.productType}
-		            	</div>
+          		<div class="span4">
+	              	<div class="control-group">
+		          		<label class="control-label">Name: ${product.name}</label>
+		       		</div>
+		       		<div class="control-group">
+	            		<label class="control-label">Type: ${product.productType}</label>
+		      		</div>
+		      		<div class="control-group">
+	            		<label class="control-label">In Stock: ${product.inStock}</label>
 	          		</div>
-	          	</div>
-	          	<div class="span3">
 	          		<div class="control-group">
-	            		<label class="control-label">In Stock:</label>
-		            	<div class="controls">
-		              		${product.inStock}
-		            	</div>
+	            		<label class="control-label">Price/20mg: ${product.price}</label>
 	          		</div>
-	          	</div>
-          </div>
-          
-          <div class="row">
-          		<div class="span12">
 	          		<div class="control-group">
-	            		<label class="control-label">
-	              			Price/20mg:
-	            		</label>
-	            		<div class="controls">
-	              			${product.price}
-	            		</div>
-	         	 	</div>
-	         	 </div>
-          </div>
-          
-          <div class="row">
-          		<div class="span3">
+		          		<label class="control-label">Production Year: ${product.productionYear}</label>
+		       		</div>
+		       		<div class="control-group">
+	            		<label class="control-label">CAS: ${product.cas}</label>
+		      		</div>
+		      		<div class="control-group">
+	            		<label class="control-label">Product Id: ${product.productIdPH}</label>
+	          		</div>
+		   		</div>
+		   		<div class="span4">
 	          		<div class="control-group">
 			            <label class="control-label">
-			              Production Year:
+			              	Structure:
 			            </label>
-			            <div class="controls">
-			              ${product.productionYear}
-			            </div>
+			            <c:if test="${product != null && product.structurePath != null}">
+		            		<img src="${path}/products/files.do?file=${product.structurePath}&folder=products" width="150" />
+		            	</c:if>
+			    	</div>
+	          	</div> 
+		 	</div>
+          
+          <div class="row">
+          	<div class="span12">
+	        	<div class="control-group">
+			    	<label class="control-label">
+			        	Description:
+			        </label>
+			        <div class="controls">
+			        	${product.description}
 			        </div>
-	          	</div>
-	          	<div class="span3">
-	          		<div class="control-group">
-			            <label class="control-label">
-			              CAS:
-			            </label>
-			            <div class="controls">	
-			              ${product.cas}
-			            </div>
-			    	</div>
-	          	</div>
-          </div>
-          
-          <div class="row">
-          		<div class="span3">
-	          		<div class="control-group">
-			            <label class="control-label">
-			              Product ID:
-			            </label>
-			            <div class="controls">	
-			              ${product.productIdPH}
-			            </div>
-			    	</div>
-	          	</div>
-	          	<div class="span9">
-	          		<div class="control-group">
-			            <label class="control-label">
-			              Structure:
-			            </label>
-			            <div class="controls">	
-			              	 <c:if test="${product != null && product.structurePath != null}">
-			            	 	<img src="${path}/products/files.do?file=${product.structurePath}&folder=products" width="150" />
-			            	 </c:if>
-			            </div>
-			    	</div>
-	          	</div>
-	      </div>
-          
-          <div class="row">
-          		<div class="span12">
-	          		<div class="control-group">
-			            <label class="control-label">
-			              Description:
-			            </label>
-			            <div class="controls">
-			              ${product.description}
-			            </div>
-			        </div>
-	          	</div>
+			    </div>
+	     	</div>
 	     </div>
     	
     	<div class="row">

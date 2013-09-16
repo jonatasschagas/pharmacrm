@@ -11,15 +11,28 @@
     	<title>PharmaSynth CRM</title>
 	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     	<meta charset="utf-8">
+    	<link rel="shortcut icon" href="${path}/img/favicon.png" type="image/png">
+		<link rel="shortcut icon" type="image/png" href="${path}/img/favicon.png" />
     	<link rel="stylesheet" href="${path}/css/bootstrap.css" >
     	<link rel="stylesheet" href="${path}/css/bootstrap.min.css">
     	<link rel="stylesheet" href="${path}/css/bootstrap-responsive.css">
     	<link rel="stylesheet" href="${path}/css/bootstrap-responsive.min.css" >
     	<link rel="stylesheet" href="${path}/css/bootstrap.jet.css">
+    	<link rel="stylesheet" href="${path}/css/datepicker.css">
     	<link rel="stylesheet" href="${path}/css/pharmacrm.css">
     	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
     	<script type="text/javascript" src="${path}/js/bootstrap.js"></script>
     	<script type="text/javascript" src="${path}/js/bootstrap.min.js"></script>
+    	<script src="${path}js/bootstrap-datepicker.js"></script>
+		
+		<script type="text/javascript">
+		
+			$(document).ready(function(){
+			    $('.datepicker').datepicker({format : 'yyyy-mm-dd'});
+			});
+		
+		</script>
+		
 	</head>
   	<body>
   		
@@ -34,17 +47,17 @@
 				            <ul class="nav">
 				              <li <c:if test="${param.pageName == 'clients'}">class="active"</c:if>>
 				                <a href="${path}/clients/index.do">
-				                  Clients
+				                  	Clients
 				                </a>
 				              </li>
-				               <li <c:if test="${param.pageName == 'products'}">class="active"</c:if>>
+				              <li <c:if test="${param.pageName == 'products'}">class="active"</c:if>>
 				                <a href="${path}/products/index.do">
-				                  Products
+				                  	Products
 				                </a>
 				              </li>
-				              <li>
-				                <a href="clients/index.do">
-				                  Orders
+				              <li <c:if test="${param.pageName == 'orders'}">class="active"</c:if>>
+				                <a href="${path}/orders/index.do">
+				                	Orders
 				                </a>
 				              </li>
 				              <li>

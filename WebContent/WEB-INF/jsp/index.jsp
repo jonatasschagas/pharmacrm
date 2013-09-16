@@ -26,10 +26,10 @@
               </a>
             </td>
             <td>
-              <img src="${path}/img/orders.png" alt="Orders" width="80px ">
-              <div class="icon_text">
-                Orders
-              </div>
+              <a href="${path}/orders/index.do">
+              	<img src="${path}/img/orders.png" width="80px">
+	            <div class="icon_text">Orders</div>
+              </a>
             </td>
           </tr>
           <tr>

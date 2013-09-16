@@ -74,3 +74,25 @@ CREATE TABLE `applications` (
      CONSTRAINT `fk_applications_products` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`),
      PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+CREATE TABLE `orders` (
+ 	 `id` int(11) NOT NULL AUTO_INCREMENT,
+ 	 `client_id` int(11) NOT NULL,
+ 	 `date` date NOT NULL,
+ 	 `description` varchar(1000) NULL,
+ 	 `last_updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON  UPDATE CURRENT_TIMESTAMP,
+     CONSTRAINT `fk_orders_client` FOREIGN KEY (`client_id`) REFERENCES `clients` (`id`),
+     PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+CREATE TABLE `orders_products` (
+ 	 `id` int(11) NOT NULL AUTO_INCREMENT,
+ 	 `product_id` int(11) NOT NULL,
+ 	 `order_id` int(11) NOT NULL,
+ 	 `amount` int(11) NULL,
+ 	 `price` double NOT NULL,
+ 	 `last_updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON  UPDATE CURRENT_TIMESTAMP,
+     CONSTRAINT `fk_orders_products_products` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`),
+     CONSTRAINT `fk_orders_products_orders` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`),
+     PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;

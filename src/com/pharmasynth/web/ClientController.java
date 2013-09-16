@@ -165,7 +165,7 @@ public class ClientController extends MultiActionController
 			}
 			catch (Exception ex)
 			{
-				log.error("viewClients: unable to retrieve user with the id " + id,ex);
+				log.error("viewClients: unable to retrieve client with the id " + id,ex);
 				params.put("error","Internal Error, please try again.");
 				return new ModelAndView("clients/index",params);
 			}
