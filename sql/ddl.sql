@@ -42,7 +42,7 @@ CREATE TABLE `contacts` (
 CREATE TABLE `products` (
  	 `id` int(11) NOT NULL AUTO_INCREMENT,
  	 `name` varchar(200) NOT NULL,
- 	 `product_idph` varchar(20) NOT NULL,
+ 	 `product_idph` varchar(20) NULL,
  	 `product_type` varchar(100) NOT NULL,
  	 `structure_path` varchar(200) NULL,
  	 `in_stock` varchar(10) NULL,

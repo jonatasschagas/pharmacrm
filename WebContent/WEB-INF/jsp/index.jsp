@@ -34,10 +34,10 @@
           </tr>
           <tr>
             <td>
-              <img src="${path}/img/reports.png" alt="Reports " width="80px ">
-              <div class="icon_text ">
-                Reports
-              </div>
+              <a href="${path}/reports/index.do">
+              	<img src="${path}/img/reports.png" width="80px">
+	            <div class="icon_text">Reports</div>
+              </a>
             </td>
             <td>
               <img src="${path}/img/documents.png" alt="Documents" width="80px ">

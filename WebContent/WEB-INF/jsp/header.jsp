@@ -23,7 +23,12 @@
     	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
     	<script type="text/javascript" src="${path}/js/bootstrap.js"></script>
     	<script type="text/javascript" src="${path}/js/bootstrap.min.js"></script>
+
+		<script src="${path}/js/highcharts.js"></script>
+		<script src="${path}/js/exporting.js"></script>
+    	
     	<script src="${path}js/bootstrap-datepicker.js"></script>
+    	<script src="${path}js/functions.js"></script>
 		
 		<script type="text/javascript">
 		
@@ -60,9 +65,9 @@
 				                	Orders
 				                </a>
 				              </li>
-				              <li>
-				                <a href="clients/index.do">
-				                  Reports
+				             <li <c:if test="${param.pageName == 'reports'}">class="active"</c:if>>
+				                <a href="${path}/reports/index.do">
+				                	Reports
 				                </a>
 				              </li>
 				              <li>

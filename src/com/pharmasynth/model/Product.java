@@ -56,7 +56,7 @@ public class Product
 	}
 	
 	@Basic
-	@Column(nullable = false,name = "product_idph")
+	@Column(nullable = true,name = "product_idph")
 	public String getProductIdPH() {
 		return productIdPH;
 	}
