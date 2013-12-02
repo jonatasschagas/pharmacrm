@@ -135,7 +135,7 @@ public class ChartsDAO {
 			{
 				con = getConnection();
 				
-				String query = "select sum(op.price) as sales, o.date as date from orders_products op, orders o "
+				String query = "select sum(op.price) as sales, CONCAT(MONTHNAME(o.date),'-',YEAR(o.date)) as date from orders_products op, orders o "
 						+ " where op.order_id = o.id ";
 				
 				if(allTimes == false && startDate != null && endDate != null)
@@ -143,7 +143,7 @@ public class ChartsDAO {
 					query += " and o.date between '"+Utils.formatDate(startDate)+"' and '"+Utils.formatDate(endDate)+"' ";
 				}
 				
-				query += " group by 2 order by 2 asc";
+				query += " group by 2 order by o.date asc";
 				
 				rs = con.prepareStatement(query).executeQuery();
 				
@@ -156,7 +156,7 @@ public class ChartsDAO {
 					
 
 					ChartDTO c = new ChartDTO();
-					c.setDate(rs.getDate("date"));
+					c.setxDimension(rs.getString("date"));
 					c.setValue(rs.getDouble("sales"));
 					
 					l.add(c);

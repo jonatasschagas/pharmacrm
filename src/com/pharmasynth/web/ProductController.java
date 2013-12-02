@@ -125,9 +125,9 @@ public class ProductController extends MultiActionController
 		}
 		
 		params.put("orderBy",orderBy);
-		params.put("products",Utils.paginate(request, list));
+		params.put("currentPage",Utils.getCurrentPage(request,"products"));
+		params.put("products",Utils.paginate(request, list,"products"));
 		params.put("numberOfPages",Utils.getNumberOfPages(list));
-		params.put("currentPage",Utils.getCurrentPage(request));
 		
 		return new ModelAndView("products/index",params);
 	}
@@ -566,6 +566,7 @@ public class ProductController extends MultiActionController
 			p = productDAO.get(Long.parseLong(productId));
 			
 			params.put("product", p);
+			params.put("success","Case study added successfully.");
 			
 			if(c != null && c.getId() != null)
 			{
@@ -643,6 +644,7 @@ public class ProductController extends MultiActionController
 			}
 			
 			p = productDAO.get(p.getId());
+			params.put("success","Application added successfully.");
 			
 			params.put("product",p);
 		}

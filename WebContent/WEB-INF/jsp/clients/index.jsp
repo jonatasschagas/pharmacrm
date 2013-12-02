@@ -7,7 +7,7 @@
     <jsp:param name="sub" value="../" />
 </jsp:include>
 		
-		<ul class="breadcrumb">
+		<!-- <ul class="breadcrumb">
         	<li>
           		<a href="${path}/index.do">Home</a>
           		<span class="divider">/</span>
@@ -15,7 +15,7 @@
         	<li class="active">
           		Clients
         	</li>
-      	</ul>
+      	</ul> -->
 		
 		<div class="row">
         	<table border="0" style="width:100%;">
@@ -52,7 +52,7 @@
                   			Contact person
                 		</label>
                 		<label class="radio inline">
-                  			<input type="radio" name="typeSearch" id="all" value="all" <c:if test="${typeSearch == 'all'}">checked</c:if>>
+                  			<input type="radio" name="typeSearch" id="all" value="all" <c:if test="${typeSearch == 'all' || typeSearch == null}">checked</c:if>>
                   			All
                 		</label>
               		</div>
@@ -71,11 +71,61 @@
 				<table class="table table-striped ">
 	            	<thead>
 	                	<tr>
-	                  		<th><a href="${path}/clients/index.do?orderBy=name&typeSearch=${typeSearch}&searchQuery=${searchQuery}">Name</a></th>
-	                  		<th><a href="${path}/clients/index.do?orderBy=country&typeSearch=${typeSearch}&searchQuery=${searchQuery}">Country</a></th>
-	                  		<th><a href="${path}/clients/index.do?orderBy=city&typeSearch=${typeSearch}&searchQuery=${searchQuery}">City</a></th>
-	                  		<th><a href="${path}/clients/index.do?orderBy=clientType&typeSearch=${typeSearch}&searchQuery=${searchQuery}">Type</a></th>
-	                  		<th><a href="${path}/clients/index.do?orderBy=industryType&typeSearch=${typeSearch}&searchQuery=${searchQuery}">Industry</a></th>
+	                  		<th>
+	                  			<a href="${path}/clients/index.do?orderBy=name&typeSearch=${typeSearch}&searchQuery=${searchQuery}">
+	                  				<c:if test="${orderBy == 'name'}">
+	                  					&darr;
+	                  				</c:if>
+	                  				<c:if test="${orderBy != 'name'}">
+	                  					&uarr;
+	                  				</c:if>
+	                  				Name
+	                  			</a>
+	                  		</th>
+	                  		<th>
+	                  			<a href="${path}/clients/index.do?orderBy=country&typeSearch=${typeSearch}&searchQuery=${searchQuery}">
+	                  				<c:if test="${orderBy == 'country'}">
+	                  					&darr;
+	                  				</c:if>
+	                  				<c:if test="${orderBy != 'country'}">
+	                  					&uarr;
+	                  				</c:if>
+	                  				Country
+	                  			</a>
+	                  		</th>
+	                  		<th>
+	                  			<a href="${path}/clients/index.do?orderBy=city&typeSearch=${typeSearch}&searchQuery=${searchQuery}">
+	                  				<c:if test="${orderBy == 'city'}">
+	                  					&darr;
+	                  				</c:if>
+	                  				<c:if test="${orderBy != 'city'}">
+	                  					&uarr;
+	                  				</c:if>
+	                  				City
+	                  			</a>
+	                  		</th>
+	                  		<th>
+	                  			<a href="${path}/clients/index.do?orderBy=clientType&typeSearch=${typeSearch}&searchQuery=${searchQuery}">
+	                  				<c:if test="${orderBy == 'clientType'}">
+	                  					&darr;
+	                  				</c:if>
+	                  				<c:if test="${orderBy != 'clientType'}">
+	                  					&uarr;
+	                  				</c:if>
+	                  				Type
+	                  			</a>
+	                  		</th>
+	                  		<th>
+	                  			<a href="${path}/clients/index.do?orderBy=industryType&typeSearch=${typeSearch}&searchQuery=${searchQuery}">
+	                  				<c:if test="${orderBy == 'industryType'}">
+	                  					&darr;
+	                  				</c:if>
+	                  				<c:if test="${orderBy != 'industryType'}">
+	                  					&uarr;
+	                  				</c:if>
+	                  				Industry
+	                  			</a>
+	                  		</th>
 	                  		<th>Edit</th>
 	                	</tr>
 	              	</thead>

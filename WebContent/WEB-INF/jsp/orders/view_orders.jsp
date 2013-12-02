@@ -2,12 +2,12 @@
 <%@ include file="/WEB-INF/jsp/include/taglibs.jsp" %>
 <%@ taglib uri="http://displaytag.sf.net" prefix="display" %>
 
-<jsp:include page="../header.jsp" >
-    <jsp:param name="pageName" value="orders" />
-    <jsp:param name="sub" value="../" />
-</jsp:include>
+		<jsp:include page="../header.jsp" >
+		   <jsp:param name="pageName" value="orders" />
+		   <jsp:param name="sub" value="../" />
+		</jsp:include>
 	
-		<ul class="breadcrumb">
+		<!-- <ul class="breadcrumb">
         	<li>
           		<a href="${path}/index.do">Home</a>
           		<span class="divider">/</span>
@@ -19,93 +19,81 @@
         	<li class="active">
           		View Order
         	</li>
-      	</ul>
+      	</ul> -->
 		
 		<div class="well">
-        
-        	<div class="row">
+			<legend>Order: ${order.client.name} - <fmt:formatDate value="${order.date}" pattern="dd/MM/yyyy"/></legend>
+        	<div class="row-fluid">
+          		<div class="span2">
+	            	<span class="label-view">Country:</span>
+	            	<span class="value-view">${order.client.country}</span>  
+				</div>
+			</div>
+			<div class="row-fluid">
+		  		<div class="span2">
+	            	<span class="label-view">Type:</span>
+	            	<span class="value-view">${order.client.clientType}</span>  
+				</div>
+			</div>
+			<div class="row-fluid">
+				<div class="span2">
+	            	<span class="label-view">Industry:</span>
+	            	<span class="value-view">${order.client.industryType}</span>  
+				</div>
+			</div>
+	      	<div class="row-fluid">
           		<div class="span12">
-	              <div class="control-group">
-		            <label class="control-label">Date: <fmt:formatDate value="${order.date}" pattern="yyyy-MM-dd"/></label>
-		          </div>
-		         </div>
-		  	</div>
-          <div class="row">
-          		<div class="span3">
 	          		<div class="control-group">
-	            		<label class="control-label">Client: ${order.client.name}</label>
-		            </div>
+			            <span class="label-view">
+			              	Description:
+			            </span>
+			            <span class="value-view">
+			            	${order.description}
+			            </span>
+			        </div>
 	          	</div>
-	          	<div class="span3">
-	          		<div class="control-group">
-	            		<label class="control-label">Country: ${order.client.country}</label>
-		            </div>
-	          	</div>
-	      </div>
-	      
-	      <div class="row">
-	      		<div class="span3">
-	          		<div class="control-group">
-	            		<label class="control-label">Type: ${order.client.clientType}</label>
-		            </div>
-	          	</div>
-	          	<div class="span3">
-	          		<div class="control-group">
-	            		<label class="control-label">Industry: ${order.client.industryType}</label>
-		            </div>
-	          	</div>
-	      </div>
+	    	 </div>
           
-    	<legend>Orders</legend>
-    	
     	<c:set var="total" value="0.0"/>
     	
-		<div class="row">
+			<div class="row">
           		<div class="span8">
-          			<table class="table table-striped ">
+          			<span class="label-view">
+			        	Order Details:
+			        </span>
+          				<table>
 			               <tbody id="order_products_table">
-			               
 			               <c:forEach items="${order.orderProducts}" var="op">
 			               		<tr>
-			               			<td>${op.amount} mg ${op.product.name}</td>
-			               			<td>${op.price} EUR</td>
+			               			<td class="span4">${op.amount} mg ${op.product.name}</td>
+			               			<td><fmt:formatNumber type="currency" value="${op.price}" currencySymbol="&euro;"/></td>
 			               		</tr>
 			               		
 			               		<c:set var="total" value="${total + op.price}"/>
 			               		
 			               </c:forEach>
 			               <tr>
+			               		<td></td>
+			               		<td><hr noshade size="3" /></td>
+			               </tr>
+			               <tr>
 			               		<td><b>Total</b></td>
-			               		<td><b>${total} EUR</b></td>
+			               		<td><b><fmt:formatNumber type="currency" value="${total}" currencySymbol="&euro;"/></b></td>
 			               </tr>
 			             </tbody>
 			   		</table>
           		</div>
           </div>
+        </div>
          
-          	<div class="row">
-          		<div class="span12">
-	          		<div class="control-group">
-			            <label class="control-label">
-			              Description:
-			            </label>
-			            <div class="controls">
-			            	${order.description}
-			            </div>
-			        </div>
-	          	</div>
-	    	 </div>
-    		
-    		<hr/>
-    		
-       		<div class="control-group">
-	            <div class="controls">
-	              <a href="javascript:window.print();" class="btn btn-info"><i class="icon-white icon-print"></i> Print</a>
-	              <a href="${path}/orders/new_order.do?id=${order.id}" class="btn btn-primary"><i class="icon-white icon-pencil"></i> Edit</a>
-	              <button  onClick="$('#deleteOrderModal').modal()" role="button" data-toggle="modal" class="btn btn-danger"><i class="icon-white icon-remove-sign"></i> Delete</button>
-	            </div>
-	          </div>
-        	
+      	<div class="control-group noPrint">
+            <div class="controls">
+              <a href="javascript:window.print();" class="btn btn-info"><i class="icon-white icon-print"></i> Print</a>
+              <a href="${path}/orders/new_order.do?id=${order.id}" class="btn btn-primary"><i class="icon-white icon-pencil"></i> Edit</a>
+              <button  onClick="$('#deleteOrderModal').modal()" role="button" data-toggle="modal" class="btn btn-danger"><i class="icon-white icon-remove-sign"></i> Delete</button>
+            </div>
+          </div>
+       	
         	
       </div>
 

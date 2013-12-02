@@ -51,7 +51,7 @@
               </div>
 		</div>	
 		
-		<div id="products_clients_charts" style="height:500px;"></div>
+		<div id="products_clients_charts" style="height:800px;"></div>
 		<div id="products_clients_charts_script"></div>
 		
 		<script type="text/javascript">

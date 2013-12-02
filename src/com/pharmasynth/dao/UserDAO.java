@@ -41,7 +41,7 @@ public class UserDAO extends BaseDAO<User> {
 		return null;
 	}
 	
-	private String getPassword(String password)
+	public String getPassword(String password)
 	{
 		return password;
 		//return DigestUtils.md5Hex(password);

@@ -2,6 +2,8 @@
 <%@ include file="/WEB-INF/jsp/include/taglibs.jsp" %>
 <%@ taglib uri="http://displaytag.sf.net" prefix="display" %>
    	
+   	<jsp:include page="../validation_messages.jsp" />
+   	
    	<div id="applications_area" class="form-horizontal"> 
    		
    		<legend>Applications</legend>
@@ -28,18 +30,15 @@
    	 	<input type="hidden"  name="application_id" id="application_id" value="${application.id}"/>
    	 	 
    	 	<div class="row">
-        	<div class="span12">
+        	<div class="span3">
             	<div class="control-group">
 	            	<label class="control-label">Application:</label>
 	            	<div class="controls">
-	              		<input type="text" class="input-xxlarge" name="application_name" id="application_name" value="${application.name}"/>
+	              		<input type="text" class="input-medium" name="application_name" id="application_name" value="${application.name}"/>
 	            	</div>
 	          	</div>
 	        </div>
-	  	</div>
-	  	
-	  	<div class="row">
-        	<div class="span3">
+	        <div class="span6">
 	        	<div class="control-group">
 	            	<label class="control-label">Category:</label>
 		            <div class="controls">
@@ -47,51 +46,46 @@
 		              		<option value=""></option>
 		              		<option value="Neuroscience" <c:if test="${application.category == 'Neuroscience'}">selected</c:if>>Neuroscience</option>
 		            	</select>
+		            	<a href="#" class="btn btn-info pull-right" id="application_add_btn"><i class="icon-white icon-plus"></i> Add/Save</a>
 		        	</div>
 	          	</div>
 	      	</div>
-	    </div>
-		
-		<div class="row">
-			<div class="span8">
-	        	<a href="#" class="btn btn-info pull-right" id="application_add_btn"><i class="icon-white icon-plus"></i> Add/Save</a>
-	        </div>
-		</div>
-		        
-        <hr/> 
-         
-        <div class="row">
-        	<div class="span10">
-          		<table class="table table-striped ">
-			    	<thead>
-			        	<tr>
-			            	<th>Application</th>
-			                <th>Category</th>
-			                <th>Edit</th>
-			                <th>Delete</th>
-			           	</tr>
-			     	</thead>
-			        <tbody id="application_table">
-			        	<c:forEach items="${product.applications}" var="a">
-			            	<tr>
-			               		<td>${a.name}</td>
-			               		<td>${a.category}</td>
-			               		<td>
-			               			<a href="javascript:editApplication('${a.id}');" class="application_edit">
-		                  				<img src="${path}/img/edit-icon.png" width="20"/>
-		                  			</a>
-			               		</td>
-			               		<td>
-			               			<a href="javascript:deleteApplication('${a.id}');" class="application_delete">
-		                  				<img src="${path}/img/delete-icon.png" width="20"/>
-		                  			</a>
-			               		</td>
-			               	</tr>
-			           	</c:forEach>
-			        </tbody>
-				</table>
-          	</div>
-		</div>
+	  	</div>
+	    
+        <c:if test="${product.applications != null && product.applications.size() > 0}">
+	        <div class="row">
+	        	<div class="span10">
+	          		<table class="table table-striped ">
+				    	<thead>
+				        	<tr>
+				            	<th>Application</th>
+				                <th>Category</th>
+				                <th>Edit</th>
+				                <th>Delete</th>
+				           	</tr>
+				     	</thead>
+				        <tbody id="application_table">
+				        	<c:forEach items="${product.applications}" var="a">
+				            	<tr>
+				               		<td>${a.name}</td>
+				               		<td>${a.category}</td>
+				               		<td>
+				               			<a href="javascript:editApplication('${a.id}');" class="application_edit">
+			                  				<img src="${path}/img/edit-icon.png" width="20"/>
+			                  			</a>
+				               		</td>
+				               		<td>
+				               			<a href="javascript:deleteApplication('${a.id}');" class="application_delete">
+			                  				<img src="${path}/img/delete-icon.png" width="20"/>
+			                  			</a>
+				               		</td>
+				               	</tr>
+				           	</c:forEach>
+				        </tbody>
+					</table>
+	          	</div>
+			</div>
+		</c:if>
          
         <script type="text/javascript">
          

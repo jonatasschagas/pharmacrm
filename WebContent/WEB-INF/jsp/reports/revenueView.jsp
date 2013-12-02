@@ -40,7 +40,7 @@
               </div>
 		</div>	
 		
-		<div id="revenue_chart" style="height:500px;"></div>
+		<div id="revenue_chart" style="height:800px;"></div>
 		<div id="revenue_chart_script"></div>
 		
 		<script type="text/javascript">

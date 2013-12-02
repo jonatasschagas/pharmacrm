@@ -40,7 +40,7 @@
               </div>
 		</div>	
 		
-		<div id="products_sales_chart" style="height:500px;"></div>
+		<div id="products_sales_chart" style="height:900px;"></div>
 		<div id="products_sales_chart_script"></div>
 		
 		<script type="text/javascript">

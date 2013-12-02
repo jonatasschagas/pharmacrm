@@ -20,12 +20,11 @@ import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 import com.pharmasynth.dao.ClientDAO;
 import com.pharmasynth.dao.OrderDAO;
 import com.pharmasynth.dao.OrderProductDAO;
+import com.pharmasynth.dao.OrderProductDAO.TypeQuery;
 import com.pharmasynth.dao.ProductDAO;
 import com.pharmasynth.model.Client;
-import com.pharmasynth.model.Contact;
 import com.pharmasynth.model.Order;
 import com.pharmasynth.model.OrderProduct;
-import com.pharmasynth.util.Country;
 import com.pharmasynth.util.Utils;
 
 @Controller
@@ -60,11 +59,41 @@ public class OrderController  extends MultiActionController
 		String typeSearch = Utils.cleanString(request.getParameter("typeSearch"));
 		String searchQuery = Utils.cleanString(request.getParameter("searchQuery"));
 		String orderBy = Utils.cleanString(request.getParameter("orderBy"));
+		String queryAction = Utils.cleanString(request.getParameter("queryAction"));
+		
 		Date startDate = null;
 		Date endDate = null;
-		
 		String startDateStr = Utils.cleanString(request.getParameter("fromDate"));
 		String endDateStr = Utils.cleanString(request.getParameter("toDate"));
+		
+		try
+		{
+			if(startDateStr != null)
+			{
+				startDate = sdf.parse(startDateStr);
+			}
+		}
+		catch(Exception ex)
+		{
+			logger.debug("index: error parsing dates.",ex);
+		}
+		
+		try
+		{
+			if(endDateStr != null)
+			{
+				endDate = sdf.parse(endDateStr);
+			}
+		}
+		catch(Exception ex)
+		{
+			logger.debug("index: error parsing dates.",ex);
+		}
+		
+		if(queryAction != null && queryAction.equals("new_search"))
+		{
+			Utils.setCurrentPage(request,"orders",0);
+		}
 		
 		if(orderBy == null)
 		{
@@ -72,53 +101,37 @@ public class OrderController  extends MultiActionController
 		}
 		
 		List<OrderProduct> list = null;
-		if(typeSearch != null && searchQuery != null || startDateStr != null && endDateStr != null)
+		
+		if(typeSearch != null && typeSearch.equalsIgnoreCase("clientName"))
 		{
-			if(typeSearch != null && typeSearch.equalsIgnoreCase("clientName"))
-			{
-				list = orderProductDAO.findByClientName(searchQuery,orderBy);
-			} 
-			else if(typeSearch != null && typeSearch.equalsIgnoreCase("all") || startDateStr != null && endDateStr != null)
-			{
-				try
-				{
-					if(startDateStr != null && endDateStr != null)
-					{
-						startDate = sdf.parse(startDateStr);
-						endDate = sdf.parse(endDateStr);
-					}
-				}
-				catch(Exception ex)
-				{
-					logger.debug("index: error parsing dates.",ex);
-				}
-				
-				list = orderProductDAO.findByAll(searchQuery,orderBy,startDate,endDate);
-			}
-			else if(typeSearch != null && typeSearch.equalsIgnoreCase("product"))
-			{
-				list = orderProductDAO.findByProduct(searchQuery,orderBy);
-			}
-			else if(typeSearch != null && typeSearch.equalsIgnoreCase("country"))
-			{
-				list = orderProductDAO.findByCountry(searchQuery,orderBy);
-			}
-			
-			params.put("typeSearch",typeSearch);
-			params.put("searchQuery",searchQuery);
-			
+			list = orderProductDAO.find(searchQuery,TypeQuery.CLIENT_NAME,orderBy,startDate,endDate);
+		} 
+		else if(typeSearch != null && typeSearch.equalsIgnoreCase("product"))
+		{
+			list = orderProductDAO.find(searchQuery,TypeQuery.PRODUCT_NAME,orderBy,startDate,endDate);
+		}
+		else if(typeSearch != null && typeSearch.equalsIgnoreCase("country"))
+		{
+			list = orderProductDAO.find(searchQuery,TypeQuery.COUNTRY,orderBy,startDate,endDate);
+		}
+		else if(typeSearch != null && typeSearch.equalsIgnoreCase("all"))
+		{
+			list = orderProductDAO.find(searchQuery,TypeQuery.ALL,orderBy,startDate,endDate);
 		}
 		else
 		{
 			list = orderProductDAO.list(orderBy);
 		}
 		
+		params.put("typeSearch",typeSearch);
+		params.put("searchQuery",searchQuery);
+			
 		params.put("orderBy",orderBy);
-		params.put("orderProducts",Utils.paginate(request, list));
-		params.put("fromDate",startDate);
-		params.put("toDate",endDate);
+		params.put("currentPage",Utils.getCurrentPage(request,"orders"));
+		params.put("orderProducts",Utils.paginate(request, list,"orders"));
+		params.put("fromDate",startDateStr);
+		params.put("toDate",endDateStr);
 		params.put("numberOfPages",Utils.getNumberOfPages(list));
-		params.put("currentPage",Utils.getCurrentPage(request));
 		
 		return new ModelAndView("orders/index",params);
 	}
@@ -285,6 +298,8 @@ public class OrderController  extends MultiActionController
 			
 			params.put("products",productDAO.list("name"));
 			params.put("order",order);
+			params.put("success","Product added to order successfully.");
+			
 		}
 		catch (Exception ex)
 		{

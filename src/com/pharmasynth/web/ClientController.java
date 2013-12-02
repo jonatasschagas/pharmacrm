@@ -105,9 +105,9 @@ public class ClientController extends MultiActionController
 		}
 		
 		params.put("orderBy",orderBy);
-		params.put("clients",Utils.paginate(request, list));
+		params.put("currentPage",Utils.getCurrentPage(request,"clients"));
+		params.put("clients",Utils.paginate(request, list,"clients"));
 		params.put("numberOfPages",Utils.getNumberOfPages(list));
-		params.put("currentPage",Utils.getCurrentPage(request));
 		
 		return new ModelAndView("clients/index",params);
 	}
@@ -412,6 +412,7 @@ public class ClientController extends MultiActionController
 			cl = clientDAO.get(cl.getId());
 			
 			params.put("client",cl);
+			params.put("success","Contact added successfully.");
 		}
 		catch (Exception ex)
 		{

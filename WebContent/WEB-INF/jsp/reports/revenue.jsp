@@ -6,20 +6,19 @@
 
 $(function () {
     $('#revenue_chart').highcharts({
-    	chart: {
-            type: 'spline'
-        },
-        title: {
+    	title: {
             text: 'Revenue',
             x: -20 //center
         },
         xAxis: {
-            type : 'datetime',
-            dateTimeLabelFormats: 
-           	{ 
-             	month: '%e. %b',
-               	year: '%b'
-       		}
+        	categories: [
+						<c:forEach var="item" items="${list}" varStatus="status">
+							<c:if test="${status.count > 1}">
+								,
+							</c:if>
+							'${item.xDimension}'
+						</c:forEach>
+     	            ]    
         },
         yAxis: {
             title: {
@@ -52,7 +51,7 @@ $(function () {
     			<c:if test="${status.count > 1}">
         			,
     			</c:if>
-				[${item.date.getTime()},${item.value}]
+				${item.value}
 			</c:forEach>
         	]
         }]

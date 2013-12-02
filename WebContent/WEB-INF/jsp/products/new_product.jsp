@@ -9,7 +9,7 @@
     <jsp:param name="sub" value="../" />
 </jsp:include>
 	
-		<ul class="breadcrumb">
+		<!-- <ul class="breadcrumb">
         	<li>
           		<a href="${path}/index.do">Home</a>
           		<span class="divider">/</span>
@@ -21,13 +21,14 @@
         	<li class="active">
           		New Product
         	</li>
-      	</ul>
+      	</ul> -->
 		
 		<div class="well">
         	<form class="form-horizontal" method="POST" action="save_product.do" enctype="multipart/form-data">
+          		<legend>New/Edit Product</legend>
           		<input type="hidden" name="id" id="id" value="${product.id}">
 			
-				<div class="row">
+				<div class="row-fluid">
           			<div class="span12">
 	              		<div class="control-group">
 		            		<label class="control-label">Name:</label>
@@ -38,12 +39,12 @@
 		         	</div>
 		  		</div>
           
-          		<div class="row">
+          		<div class="row-fluid">
           			<div class="span3">
 	          			<div class="control-group">
 	            			<label class="control-label">Type:</label>
 		            		<div class="controls">
-		              			<select name="type" id="type">
+		              			<select name="type" id="type" class="input-medium">
 		              				<option value=""></option>
 		                			<option <c:if test="${product != null && product.productType == 'Precursor'}">selected</c:if> value="Precursor">Precursor</option>
 		                			<option <c:if test="${product != null && product.productType == 'Reference Standard'}">selected</c:if> value="Reference Standard">Reference Standard</option>
@@ -55,7 +56,7 @@
 	          			<div class="control-group">
 	            			<label class="control-label">In Stock:</label>
 		            			<div class="controls">
-		              				<select name="inStock" id="inStock">
+		              				<select name="inStock" id="inStock" class="input-small">
 		              					<option value=""></option>
 		                				<option <c:if test="${product != null && product.inStock == '++'}">selected</c:if> value="++">++</option>
 		                				<option <c:if test="${product != null && product.inStock == '+'}">selected</c:if> value="+">+</option>
@@ -66,54 +67,67 @@
 	          		</div>
           		</div>
           
-          		<div class="row">
-          			<div class="span12">
+          		<div class="row-fluid">
+          			<div class="span3">
 	          			<div class="control-group">
 	            			<label class="control-label">
-	              				Price/20mg:
+	              				Price &#8364;/ 20 mg:
 	            			</label>
 	            			<div class="controls">
-	              				<input type="text" name="price" class="input-xxlarge" id="price" value="${product.price}">
+	              				<input type="text" name="price" class="input-small" id="price" value="${product.price}">
 	            			</div>
 	         	 		</div>
 	         	 	</div>
-          		</div>
-          
-          		<div class="row">
-          			<div class="span3">
+	         	 	<div class="span3">
 	          			<div class="control-group">
 			            	<label class="control-label">
 			              		Production Year:
 			            	</label>
 			            	<div class="controls">
-			              		<input type="text" name="productionYear" id="productionYear" value="${product.productionYear}">
+			              		<input type="text" name="productionYear"  class="input-small" id="productionYear" value="${product.productionYear}">
 			            	</div>
 			        	</div>
 	          		</div>
-	          		<div class="span3">
+          		</div>
+          
+          		<div class="row-fluid">
+          			<div class="span3">
 	          			<div class="control-group">
 			            	<label class="control-label">
 			              		CAS:
 			            	</label>
 			            	<div class="controls">	
-			              		<input type="text" name="cas" id="cas" value="${product.cas}">
+			              		<input type="text" name="cas" id="cas" class="input-medium" value="${product.cas}">
 			            	</div>
 			    		</div>
 	          		</div>
-          		</div>
-          
-          		<div class="row">
-          			<div class="span3">
+	          		<div class="span3">
 	          			<div class="control-group">
 			            	<label class="control-label">
 			              		Product ID:
 			            	</label>
 			            	<div class="controls">	
-			              		<input type="text" name="productIdPH" id="productIdPH" value="${product.productIdPH}">
+			              		<input type="text" name="productIdPH" id="productIdPH" class="input-medium" value="${product.productIdPH}">
 			            	</div>
 			    		</div>
 	          		</div>
-	          		<div class="span9">
+          		</div>
+          		
+          		<div class="row-fluid">
+          			<div class="span12">
+	          			<div class="control-group">
+			            	<label class="control-label">
+			              		Description:
+			            	</label>
+			            	<div class="controls">
+			             		<textarea id="description" class="input-xxlarge" name="description">${product.description}</textarea>
+			            	</div>
+			        	</div>
+	          		</div>
+	     		</div>
+          		
+          		<div class="row-fluid">
+          			<div class="span9">
 	          			<div class="control-group">
 			            	<label class="control-label">
 			              		Structure:
@@ -128,25 +142,11 @@
 			    		</div>
 	          		</div>
 	      		</div>
-          
-          		<div class="row">
-          			<div class="span12">
-	          			<div class="control-group">
-			            	<label class="control-label">
-			              		Description:
-			            	</label>
-			            	<div class="controls">
-			             		<textarea id="description" class="input-xxlarge" name="description">${product.description}</textarea>
-			            	</div>
-			        	</div>
-	          		</div>
-	     		</div>
-    	
-          		<div class="row">
+          		<div class="row-fluid">
           			<div class="span8">
 	          			<div class="control-group">
 			            	<div class="controls">	
-			              		<button type="submit" class="btn btn-primary">Save</button>
+			              		<button type="submit" class="btn btn-primary pull-right">Save</button>
 			            	</div>
 			    		</div>
 	          		</div>

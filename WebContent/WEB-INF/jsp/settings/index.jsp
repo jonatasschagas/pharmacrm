@@ -7,7 +7,7 @@
     <jsp:param name="sub" value="../" />
 </jsp:include>
 		
-		<ul class="breadcrumb">
+		<!-- <ul class="breadcrumb">
         	<li>
           		<a href="${path}/index.do">Home</a>
           		<span class="divider">/</span>
@@ -15,7 +15,7 @@
         	<li class="active">
           		Settings
         	</li>
-      	</ul>
+      	</ul>  -->
 		
 		<div class="row">
         	<table border="0" style="width:100%;">

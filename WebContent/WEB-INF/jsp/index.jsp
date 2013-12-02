@@ -4,13 +4,7 @@
 
 <jsp:include page="header.jsp" />
 
-	  <ul class="breadcrumb">
-        <li>
-          <a href="#">Home</a>
-        </li>
-      </ul>
-      
-      <table style="text-align:center;" border="0" cellpadding="40" align="center">
+	  <table style="text-align:center;" border="0" cellpadding="40" align="center">
         <tbody>
           <tr>
             <td>
@@ -46,10 +40,10 @@
               </div>
             </td>
             <td>
-              <img src="${path}/img/settings.png" alt="Settings " width="80px ">
-              <div class="icon_text ">
-                Settings
-              </div>
+              <a href="${path}/settings/index.do">
+              	<img src="${path}/img/settings.png" width="80px">
+	            <div class="icon_text">Settings</div>
+              </a>
             </td>
           </tr>
         </tbody>

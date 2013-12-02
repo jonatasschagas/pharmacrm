@@ -1,5 +1,6 @@
 package com.pharmasynth.dao;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Component;
 import com.pharmasynth.model.OrderProduct;
 import com.pharmasynth.util.Utils;
 
+@SuppressWarnings("unchecked")
 @Component
 public class OrderProductDAO extends BaseDAO<OrderProduct> {
 
@@ -18,68 +20,83 @@ public class OrderProductDAO extends BaseDAO<OrderProduct> {
 		super(sessionFactory);
 	}
 	
-	/**
-	 * Retrieves the Order Products by client name
-	 * @param name
-	 * @return
-	 */
-	@SuppressWarnings("unchecked")
-	public List<OrderProduct> findByClientName(String name, String orderBy)
+	public enum TypeQuery
 	{
-		Object[] params = new Object[]{"%"+name+"%"};
-		
-		List<OrderProduct> l = getHibernateTemplate().find("from OrderProduct where order.client.name like ? order by "+orderBy+" ",params);
-		
-		return l;
-	}
-	
-	public List<OrderProduct> findByProduct(String name, String orderBy)
-	{
-		Object[] params = new Object[]{"%"+name+"%"};
-		
-		List<OrderProduct> l = getHibernateTemplate().find("from OrderProduct where product.name like ? order by "+orderBy+" ",params);
-		
-		return l;
-	}
-	
-	public List<OrderProduct> findByCountry(String name, String orderBy)
-	{
-		Object[] params = new Object[]{"%"+name+"%"};
-		
-		List<OrderProduct> l = getHibernateTemplate().find("from OrderProduct where order.client.country like ? order by "+orderBy+" ",params);
-		
-		return l;
+		ALL,
+		CLIENT_NAME,
+		PRODUCT_NAME,
+		COUNTRY
 	}
 	
 	/**
-	 * Retrieves all the Order Products by all the parameters
+	 * Retrieves the Order Products by the typeQuery
 	 * @param name
 	 * @return
 	 */
-	@SuppressWarnings("unchecked")
-	public List<OrderProduct> findByAll(String search, String orderBy,Date startDate, Date endDate)
+	public List<OrderProduct> find(String name,TypeQuery type, String orderBy,Date startDate, Date endDate)
 	{
-		Object[] params = null;
 		List<OrderProduct> l = null;
 		
-		Long amount = Utils.getInteger(search).longValue();
-		Double price = Utils.getDouble(search);
+		List<Object> paramsList = new ArrayList<Object>();
+		String query = "from OrderProduct ";
+		StringBuffer where = new StringBuffer();
 		
-		if(startDate != null && endDate != null)
+		if(name != null && type != null)
 		{
-			params = new Object[]{"%"+search+"%","%"+search+"%","%"+search+"%",amount,price
-					,startDate,endDate};
-			
-			l = getHibernateTemplate().find("from OrderProduct where order.client.name like ? or order.client.country like ?"
-					+ " or product.name like ? or amount = ? or price = ? or order.date between ? and ? order by "+orderBy+"",params);
+			switch(type)
+			{	case ALL:
+					where.append(" order.client.name like ? or order.client.country like ?"
+					+ " or product.name like ? ");
+					paramsList.add("%" + name + "%");
+					paramsList.add("%" + name + "%");
+					paramsList.add("%" + name + "%");
+					break;
+				case CLIENT_NAME:
+					where.append(" order.client.name like ? ");
+					paramsList.add("%" + name + "%");
+					break;
+				case PRODUCT_NAME:
+					where.append(" product.name like ? ");
+					paramsList.add("%" + name + "%");
+					break;
+				case COUNTRY:
+					where.append(" order.client.country like ? ");
+					paramsList.add("%" + name + "%");
+					break;
+			}
+		}
+		
+		if(startDate != null)
+		{
+			if(where.length() > 0)
+			{
+				where.append(" and ");
+			}
+			where.append(" order.date > ? ");
+			paramsList.add(startDate);
+		}
+		
+		if(endDate != null)
+		{
+			if(where.length() > 0)
+			{
+				where.append(" and ");
+			}
+			where.append(" order.date < ? ");
+			paramsList.add(endDate);
+		}
+		
+		if(where.length() > 0)
+		{
+			query += " where " + where.toString() + " order by "+orderBy + "";
 		}
 		else
 		{
-			params = new Object[]{"%"+search+"%","%"+search+"%","%"+search+"%",amount,price};
-			
-			l = getHibernateTemplate().find("from OrderProduct where order.client.name like ? or order.client.country like ?"
-					+ " or product.name like ? or amount = ? or price = ?  order by "+orderBy+"",params);
+			query += " order by "+orderBy + "";
 		}
+		
+		
+		l = getHibernateTemplate().find(query,paramsList.toArray());
 		
 		return l;
 	}
@@ -89,7 +106,6 @@ public class OrderProductDAO extends BaseDAO<OrderProduct> {
 	 * @param name
 	 * @return
 	 */
-	@SuppressWarnings("unchecked")
 	public List<OrderProduct> list(String orderBy)
 	{
 		List<OrderProduct> l = getHibernateTemplate().find("from OrderProduct order by "+orderBy+" ");

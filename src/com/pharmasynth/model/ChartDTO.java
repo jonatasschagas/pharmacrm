@@ -7,6 +7,7 @@ public class ChartDTO {
 	private String label;
 	private Double value;
 	private Date date;
+	private String xDimension;
 	
 	public String getLabel() {
 		return label;
@@ -26,11 +27,16 @@ public class ChartDTO {
 	public void setDate(Date date) {
 		this.date = date;
 	}
+	public String getxDimension() {
+		return xDimension;
+	}
+	public void setxDimension(String xDimension) {
+		this.xDimension = xDimension;
+	}
+	
 	@Override
 	public String toString() {
 		return "ChartDTO [label=" + label + ", value=" + value + ", date="
-				+ date + "]";
+				+ date + ", xDimension=" + xDimension + "]";
 	}
-	
-	
 }

@@ -7,7 +7,7 @@
     <jsp:param name="sub" value="../" />
 </jsp:include>
 		
-		<ul class="breadcrumb">
+		<!-- <ul class="breadcrumb">
         	<li>
           		<a href="${path}/index.do">Home</a>
           		<span class="divider">/</span>
@@ -15,7 +15,7 @@
         	<li class="active">
           		Products
         	</li>
-      	</ul>
+      	</ul> -->
 		
 		<div class="row">
         	<table border="0" style="width:100%;">
@@ -56,7 +56,7 @@
                   			CAS
                 		</label>
                 		<label class="radio inline">
-                  			<input type="radio" name="typeSearch" id="all" value="all" <c:if test="${typeSearch == 'all'}">checked</c:if>>
+                  			<input type="radio" name="typeSearch" id="all" value="all" <c:if test="${typeSearch == 'all'  || typeSearch == null}">checked</c:if>>
                   			All
                 		</label>
               		</div>
@@ -75,10 +75,50 @@
 				<table class="table table-striped ">
 	            	<thead>
 	                	<tr>
-	                  		<th><a href="${path}/products/index.do?orderBy=name&typeSearch=${typeSearch}&searchQuery=${searchQuery}">Name</a></th>
-	                  		<th><a href="${path}/products/index.do?orderBy=productType&typeSearch=${typeSearch}&searchQuery=${searchQuery}">Type</a></th>
-	                  		<th><a href="${path}/products/index.do?orderBy=inStock&typeSearch=${typeSearch}&searchQuery=${searchQuery}">In Stock</a></th>
-	                  		<th><a href="${path}/products/index.do?orderBy=productionYear&typeSearch=${typeSearch}&searchQuery=${searchQuery}">Year</a></th>
+	                  		<th>
+	                  			<a href="${path}/products/index.do?orderBy=name&typeSearch=${typeSearch}&searchQuery=${searchQuery}">
+	                  				<c:if test="${orderBy == 'name'}">
+	                  					&darr;
+	                  				</c:if>
+	                  				<c:if test="${orderBy != 'name'}">
+	                  					&uarr;
+	                  				</c:if>
+	                  				Name
+	                  			</a>
+	                  		</th>
+	                  		<th>
+	                  			<a href="${path}/products/index.do?orderBy=productType&typeSearch=${typeSearch}&searchQuery=${searchQuery}">
+	                  				<c:if test="${orderBy == 'productType'}">
+	                  					&darr;
+	                  				</c:if>
+	                  				<c:if test="${orderBy != 'productType'}">
+	                  					&uarr;
+	                  				</c:if>
+	                  				Type
+	                  			</a>
+	                  		</th>
+	                  		<th>
+	                  			<a href="${path}/products/index.do?orderBy=inStock&typeSearch=${typeSearch}&searchQuery=${searchQuery}">
+	                  				<c:if test="${orderBy == 'inStock'}">
+	                  					&darr;
+	                  				</c:if>
+	                  				<c:if test="${orderBy != 'inStock'}">
+	                  					&uarr;
+	                  				</c:if>
+	                  				In Stock
+	                  			</a>
+	                  		</th>
+	                  		<th>
+	                  			<a href="${path}/products/index.do?orderBy=productionYear&typeSearch=${typeSearch}&searchQuery=${searchQuery}">
+	                  				<c:if test="${orderBy == 'productionYear'}">
+	                  					&darr;
+	                  				</c:if>
+	                  				<c:if test="${orderBy != 'productionYear'}">
+	                  					&uarr;
+	                  				</c:if>
+	                  				Product ID
+	                  			</a>
+	                  		</th>
 	                  		<th>Edit</th>
 	                	</tr>
 	              	</thead>
@@ -92,7 +132,7 @@
 				                  	</td>
 				                  	<td>${p.productType}</td>
 				                  	<td>${p.inStock}</td>
-				                  	<td>${p.productionYear}</td>
+				                  	<td>${p.productIdPH}</td>
 				                  	<td>
 				                  		<a href="${path}/products/new_product.do?id=${p.id}">
 				                  			<img src="${path}/img/edit-icon.png" width="20"/>

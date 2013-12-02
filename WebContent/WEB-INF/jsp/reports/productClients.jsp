@@ -8,7 +8,7 @@
 	    $('#products_clients_charts').highcharts({
 	        chart: {
 	            type: 'column',
-	            margin: [ 50, 50, 100, 80]
+	            margin: [ 50, 50, 250, 80]
 	        },
 	        title: {
 	            text: 'Clients who have ordered ${product.name}'
@@ -41,7 +41,7 @@
 	                  	<c:set var="lastValue" value="${item.value}" />
 	              	</c:if>
 	          	</c:forEach>
-	            min :<fmt:formatNumber type="number" pattern="###" value="${lastValue}" />
+	            min : 0
 	        },
 	        legend: {
 	            enabled: false

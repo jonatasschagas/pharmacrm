@@ -2,6 +2,8 @@
 <%@ include file="/WEB-INF/jsp/include/taglibs.jsp" %>
 <%@ taglib uri="http://displaytag.sf.net" prefix="display" %>
    	
+   	<jsp:include page="../validation_messages.jsp" />
+   	
    	<div id="order_products_area" class="form-horizontal"> 
    		
     	 <legend>Products</legend>
@@ -27,23 +29,23 @@
    	 	 <input type="hidden"  name="order_id" id="order_id" value="${order.id}"/>
    	 	 <input type="hidden"  name="order_product_id" id="order_product_id" value="${orderProduct.id}"/>
    	 	 
-   	 	 <div class="row">
-         		<div class="span12">
-              <div class="control-group">
-	            <label class="control-label">Product:</label>
-	            <div class="controls">
-	            	<select name="product" id="product">
-              			<option value=""></option>
-                		<c:forEach var="p" items="${products}" varStatus="status">
-                			<option <c:if test="${orderProduct != null && orderProduct.product.id == p.id}">selected</c:if> value="${p.id}">${p.name}</option>
-                		</c:forEach>
-              		</select>
-	            </div>
-	          </div>
-	         </div>
+   	 	 <div class="row-fluid">
+        	<div class="span12">
+            	<div class="control-group">
+	            	<label class="control-label">Product:</label>
+	            	<div class="controls">
+	            		<select name="product" id="product" class="input-xxlarge">
+              				<option value=""></option>
+                			<c:forEach var="p" items="${products}" varStatus="status">
+                				<option <c:if test="${orderProduct != null && orderProduct.product.id == p.id}">selected</c:if> value="${p.id}">${p.name}</option>
+                			</c:forEach>
+              			</select>
+	            	</div>
+	          	</div>
+			</div>
 	  	</div>
 	  	
-	  	 <div class="row">
+	  	 <div class="row-fluid">
           		<div class="span3">
 	          		<div class="control-group">
 	            		<label class="control-label">Amount mg:</label>
@@ -52,22 +54,19 @@
 		            	</div>
 	          		</div>
 	          	</div>
-	          	<div class="span4">
+	          	<div class="span2">
 	          		<div class="control-group">
 	            		<label class="control-label">Price EUR:</label>
 	            		<div class="controls">
-	              			<input type="text" name="price" id="price" value="${orderProduct.price}"/>
+	              			<input type="text" name="price" id="price" class="input-small" value="${orderProduct.price}"/>
 	            		</div>
 	          		</div>
 	          	</div>
-          </div>
-         
-	  	  <div class="row">
-              	<div class="span8">
+	          	<div class="span3">
 	          		<a href="#" class="btn btn-info pull-right" id="order_products_add_btn"><i class="icon-white icon-plus"></i> Add/Save</a>
 	          	</div>
           </div>
-         
+          
          <hr/>
          
           <div class="row">
@@ -88,7 +87,7 @@
 			               		<tr>
 			               			<td>${op.product.name}</td>
 			               			<td>${op.amount}</td>
-			               			<td>${op.price} EUR</td>
+			               			<td><fmt:formatNumber type="currency" value="${op.price}" currencySymbol="&euro;"/></td>
 			               			<th>
 			               				<a href="javascript:editOrderProducts('${op.id}');" class="order_products_edit">
 		                  					<img src="${path}/img/edit-icon.png" width="20"/>

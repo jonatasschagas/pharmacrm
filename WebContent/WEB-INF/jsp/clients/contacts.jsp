@@ -2,9 +2,11 @@
 <%@ include file="/WEB-INF/jsp/include/taglibs.jsp" %>
 <%@ taglib uri="http://displaytag.sf.net" prefix="display" %>
    	
+   	<jsp:include page="../validation_messages.jsp" />
+   		
    	<div id="contact_area" class="form-horizontal"> 
    		
-    	 <legend>Contacts</legend>
+   		<legend>Contacts</legend>
    		
    		<c:if test='${not empty error || not empty param.error}'>
 			<div class="row">
@@ -27,7 +29,7 @@
    	 	 <input type="hidden"  name="client_id" id="client_id" value="${client.id}"/>
    	 	 <input type="hidden"  name="contact_id" id="contact_id" value="${contact.id}"/>
    	 	 
-   	 	 <div class="row">
+   	 	 <div class="row-fluid">
          		<div class="span12">
               <div class="control-group">
 	            <label class="control-label">Name:</label>
@@ -88,13 +90,13 @@
           		<table class="table table-striped ">
 			             <thead>
 			               <tr>
-			                 <th>Name</th>
-			                 <th>Address</th>
-			                 <th>Telephone</th>
-			                 <th>E-mail</th>
-			                 <th>Position</th>
-			                 <th>Edit</th>
-			                 <th>Delete</th>
+			                 <th class="span2">Name</th>
+			                 <th class="span2">Address</th>
+			                 <th class="span2">Telephone</th>
+			                 <th class="span2">E-mail</th>
+			                 <th class="span2">Position</th>
+			                 <th class="span2">Edit</th>
+			                 <th class="span2">Delete</th>
 			               </tr>
 			             </thead>
 			               <tbody id="contact_table">

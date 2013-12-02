@@ -183,21 +183,18 @@ public class Utils {
 	  return Arrays.asList(array);
 	}
 	
-	public static List paginate(HttpServletRequest request, List list)
+	public static List paginate(HttpServletRequest request, List list,String section)
 	{
 		try
 		{
-			String selectedPage = cleanString(request.getParameter("page"));
-			Integer selectedPageNumber = 0;
+			Integer selectedPageNumber = getCurrentPage(request, section);
 			
-			if(selectedPage == null)
+			if(selectedPageNumber == 0)
 			{
 				return list.subList(0,PAGE_SIZE);
 			}
 			else
 			{
-				selectedPageNumber = Integer.parseInt(selectedPage);
-				
 				Integer start = selectedPageNumber * PAGE_SIZE;
 				Integer end = selectedPageNumber * PAGE_SIZE + PAGE_SIZE;
 				
@@ -213,12 +210,21 @@ public class Utils {
 		return list;
 	}
 	
-	public static Integer getCurrentPage(HttpServletRequest request)
+	public static Integer getCurrentPage(HttpServletRequest request,String section)
 	{
 		try
 		{
 			String selectedPage = cleanString(request.getParameter("page"));
 			Integer selectedPageNumber = 0;
+			
+			if(selectedPage == null)
+			{
+				selectedPage = (String)request.getSession().getAttribute("page_" + section);
+			}
+			else
+			{
+				request.getSession().setAttribute("page_" + section,selectedPage);
+			}
 			
 			if(selectedPage == null)
 			{
@@ -233,9 +239,18 @@ public class Utils {
 		return 0;
 	}
 	
+	public static void setCurrentPage(HttpServletRequest request,String section,Integer selectedPage)
+	{
+		try
+		{
+			request.getSession().setAttribute("page_" + section,selectedPage);
+		}
+		catch (Exception ex) {}
+	}
+	
 	public static Integer getNumberOfPages(List list)
 	{
-		return list != null ? list.size() / PAGE_SIZE : 0;
+		return list != null ? (list.size() - 1) / PAGE_SIZE : 0;
 	}
 	
 	public static File getFile(String path) throws Exception

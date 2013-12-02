@@ -8,7 +8,7 @@
 	    $('#products_sales_chart').highcharts({
 	        chart: {
 	            type: 'column',
-	            margin: [ 50, 50, 100, 80]
+	            margin: [ 50, 50, 250, 80]
 	        },
 	        title: {
 	            text: 'Product Sales'

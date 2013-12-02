@@ -4,6 +4,8 @@
 <%@taglib prefix="s" uri="http://www.springframework.org/tags" %>
 <%@ taglib uri="http://displaytag.sf.net" prefix="display" %>
    	
+   	<jsp:include page="../validation_messages.jsp" />
+   	
 	<div id="case_studies_area" class="form-horizontal"> 
    		
     	<legend>Case Studies</legend>
@@ -31,19 +33,26 @@
             <input type="hidden"  name="product_id" id="product_id" value="${product.id}"/>
    	 	 	<input type="hidden"  name="caseStudyId" id="caseStudyId" value="${caseStudy.id}"/>
    	 	 
-   	 	 	<div class="row">
-         		<div class="span12">
+   	 	 	<div class="row-fluid">
+         		<div class="span3">
               		<div class="control-group">
 	            		<label class="control-label">Name:</label>
 	            		<div class="controls">
-	              			<input type="text" class="input-xxlarge" name="caseStudy_name" id="caseStudy_name" value="${caseStudy.name}"/>
+	              			<input type="text" class="input-large" name="caseStudy_name" id="caseStudy_name" value="${caseStudy.name}"/>
 	            		</div>
 	          		</div>
 	         	</div>
-	  		</div>
-	  	
-	  	 	<div class="row">
-          		<div class="span3">
+	         	<div class="span3">
+	          		<div class="control-group">
+	            		<label class="control-label">Link:</label>
+	            		<div class="controls">
+	              			<input type="text" class="input-large" name="caseStudy_link" id="caseStudy_link" value="${caseStudy.link}"/>
+	            		</div>
+	          		</div>
+	          	</div>
+	        </div>
+	        <div class="row-fluid">
+	         	<div class="span6">
 	          		<div class="control-group">
 	            		<label class="control-label">File:</label>
 		            	<div class="controls">
@@ -54,66 +63,51 @@
 		            	</div>
 	          		</div>
 	          	</div>
-	       </div>
-	       
-	       <div class="row">
-	          	<div class="span6">
-	          		<div class="control-group">
-	            		<label class="control-label">Link:</label>
-	            		<div class="controls">
-	              			<input type="text" class="input-xxlarge" name="caseStudy_link" id="caseStudy_link" value="${caseStudy.link}"/>
-	            		</div>
-	          		</div>
+	          	<div class="span4">
+	          		<a href="#" class="btn btn-info" id="caseStudy_add_btn"><i class="icon-white icon-plus"></i> Add/Save</a>
 	          	</div>
-	        </div>
-          
-          	<div class="row">
-          		<div class="span8">
-	          		<a href="#" class="btn btn-info pull-right" id="caseStudy_add_btn"><i class="icon-white icon-plus"></i> Add/Save</a>
+	  		</div>
+	  	</form>
+	  	 
+	  	<c:if test="${product.caseStudies != null && product.caseStudies.size() > 0}"> 
+	        <div class="row">
+	        	<div class="span10">
+	          		<table class="table table-striped ">
+				    	<thead>
+				        	<tr>
+				            	<th>Name</th>
+				                <th>Edit</th>
+				                <th>Delete</th>
+				            </tr>
+				        </thead>
+				        <tbody id="contact_table">
+				        	<c:forEach items="${product.caseStudies}" var="c">
+				            	<tr>
+				               		<td>
+				               			<c:if test="${c.link != null && c.filePath == null}">
+				               				<a href="${c.link}">${c.name}</a>
+				               			</c:if>
+				               			<c:if test="${c.filePath != null}">
+				               				<a href="${path}/products/files.do?file=${c.filePath}&folder=case_studies">${c.name}</a>
+				               			</c:if>
+				               		</td>
+				               		<td>
+				               			<a href="javascript:editCaseStudies('${c.id}');" class="caseStudies_edit">
+			                  				<img src="${path}/img/edit-icon.png" width="20"/>
+			                  			</a>
+				               		</td>
+				               		<td>
+				               			<a href="javascript:deleteCaseStudies('${c.id}');" class="caseStudies_delete">
+			                  				<img src="${path}/img/delete-icon.png" width="20"/>
+			                  			</a>
+				               		</td>
+				               	</tr>
+				            </c:forEach>
+				       	</tbody>
+				   	</table>
 	          	</div>
-          	</div>
-          
-		</form>
-	  	 
-	  	<hr/> 
-	  	 
-        <div class="row">
-        	<div class="span10">
-          		<table class="table table-striped ">
-			    	<thead>
-			        	<tr>
-			            	<th>Name</th>
-			                <th>Edit</th>
-			                <th>Delete</th>
-			            </tr>
-			        </thead>
-			        <tbody id="contact_table">
-			        	<c:forEach items="${product.caseStudies}" var="c">
-			            	<tr>
-			               		<td>
-			               			<c:if test="${c.link != null && c.filePath == null}">
-			               				<a href="${c.link}">${c.name}</a>
-			               			</c:if>
-			               			<c:if test="${c.filePath != null}">
-			               				<a href="${path}/products/files.do?file=${c.filePath}&folder=case_studies">${c.name}</a>
-			               			</c:if>
-			               		</td>
-			               		<td>
-			               			<a href="javascript:editCaseStudies('${c.id}');" class="caseStudies_edit">
-		                  				<img src="${path}/img/edit-icon.png" width="20"/>
-		                  			</a>
-			               		</td>
-			               		<td>
-			               			<a href="javascript:deleteCaseStudies('${c.id}');" class="caseStudies_delete">
-		                  				<img src="${path}/img/delete-icon.png" width="20"/>
-		                  			</a>
-			               		</td>
-			               	</tr>
-			            </c:forEach>
-			       	</tbody>
-			   	</table>
-          	</div>
- 		</div>
+	 		</div>
+	 	</c:if>
          
          <script type="text/javascript">
          
